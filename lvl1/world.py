@@ -7,9 +7,11 @@ import pyglet
 
 GROUND_IMAGE_PATH = r'assets/ground.png'
 OBSTACLE_IMAGE_PATH = r'assets/obstacle.png'
+GOAL_IMAGE_PATH = r'assets/goal.png'
 
 GROUND = 'ground'
 OBSTACLE = 'obstacle'
+GOAL = 'goal'
 
 TILE_SIZE = 16
 
@@ -21,12 +23,15 @@ class DungeonTileSet(cocos.tiles.TileSet):
 
         ground_image = pyglet.image.load(GROUND_IMAGE_PATH)
         obstacle_image = pyglet.image.load(OBSTACLE_IMAGE_PATH)
+        goal_image = pyglet.image.load(GOAL_IMAGE_PATH)
 
-        ground_properties = {'obstacle': False}
-        obstacle_properties = {'obstacle': True}
+        ground_properties = {'obstacle': False, 'goal': True}
+        obstacle_properties = {'obstacle': True, 'goal': True}
+        goal_properties = {'obstacle': False, 'goal': True}
 
         self.add(ground_properties, ground_image, GROUND)
         self.add(obstacle_properties, obstacle_image, OBSTACLE)
+        self.add(goal_properties, goal_image, GOAL)
 
 
 class Dungeon(cocos.tiles.RectMapLayer):
@@ -52,6 +57,8 @@ class Dungeon(cocos.tiles.RectMapLayer):
             for y in range(self.height):
                 if x == 0 or x == self.width - 1 or y == 0 or y == self.height - 1:
                     column.append(OBSTACLE)
+                elif x == 1 and y == self.height - 2:
+                    column.append(GOAL)
                 else:
                     column.append(GROUND)
             self.__cells.append(column)
@@ -68,7 +75,7 @@ if __name__ == "__main__":
     cocos.director.director.init()
 
     # We create a new layer, an instance of HelloWorld
-    dungeon = Dungeon(10, 12)
+    dungeon = Dungeon(30, 12)
 
     # A scene that contains the layer hello_layer
     main_scene = cocos.scene.Scene(dungeon)
