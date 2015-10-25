@@ -87,7 +87,7 @@ if __name__ == "__main__":
     cocos.director.director.init(width=SCREEN_SIZE[0], height=SCREEN_SIZE[1], caption='Level 1')
 
     # We create a new layer, an instance of HelloWorld
-    dungeon = Dungeon(4,4)
+    dungeon = Dungeon(15, 20)
     dungeon.set_view(SCREEN_SIZE)
     # A scene that contains the layer hello_layer
     main_scene = cocos.scene.Scene(dungeon)
