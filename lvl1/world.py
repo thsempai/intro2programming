@@ -13,7 +13,8 @@ GROUND = 'ground'
 OBSTACLE = 'obstacle'
 GOAL = 'goal'
 
-TILE_SIZE = 16
+TILE_SIZE = (16, 16)
+SCREEN_SIZE = (800, 600)
 
 
 class DungeonTileSet(cocos.tiles.TileSet):
@@ -46,8 +47,7 @@ class Dungeon(cocos.tiles.RectMapLayer):
         self.__build()
         self.__apply_tileset()
 
-        super(Dungeon, self).__init__('dungeon', TILE_SIZE, TILE_SIZE, self.__cells)
-        self.set_view(0, 0, self.width * TILE_SIZE, self.height * TILE_SIZE)
+        super(Dungeon, self).__init__('dungeon', TILE_SIZE[0], TILE_SIZE[1], self.__cells)
 
     def __build(self):
         self.__cells = []
@@ -67,16 +67,28 @@ class Dungeon(cocos.tiles.RectMapLayer):
         for x in range(self.width):
             for y in range(self.height):
                 self.__cells[x][y] = cocos.tiles.RectCell(
-                    x, y, TILE_SIZE, TILE_SIZE, {}, self.tileset[self.__cells[x][y]])
+                    x, y, TILE_SIZE[0], TILE_SIZE[1], {}, self.tileset[self.__cells[x][y]])
+
+    def set_view(self, screen_size):
+
+        center = (int(screen_size[0] / 2), int(screen_size[1] / 2))
+        dungeon_size = (self.width * TILE_SIZE[0], self.height * TILE_SIZE[1])
+        origin = (int(dungeon_size[0] / 2 - center[0]), int(dungeon_size[1] / 2 - center[1]))
+        print(origin)
+        super(Dungeon, self).set_view(
+            origin[0],
+            origin[1],
+            self.width * TILE_SIZE[0] - origin[0],
+            self.height * TILE_SIZE[1] - origin[1])
 
 
 if __name__ == "__main__":
     # director init takes the same arguments as pyglet.window
-    cocos.director.director.init()
+    cocos.director.director.init(width=SCREEN_SIZE[0], height=SCREEN_SIZE[1], caption='Level 1')
 
     # We create a new layer, an instance of HelloWorld
-    dungeon = Dungeon(30, 12)
-
+    dungeon = Dungeon(4,4)
+    dungeon.set_view(SCREEN_SIZE)
     # A scene that contains the layer hello_layer
     main_scene = cocos.scene.Scene(dungeon)
 
