@@ -5,6 +5,8 @@
 import cocos
 import pyglet
 
+from pyglet.gl import *
+
 from enum import Enum
 
 GROUND_IMAGE_PATH = r'assets/ground.png'
@@ -16,7 +18,8 @@ OBSTACLE = 'obstacle'
 GOAL = 'goal'
 
 TILE_SIZE = (16, 16)
-SCREEN_SIZE = (800, 600)
+SCREEN_SIZE = (400, 300)
+SCALE_FACTOR = 2
 ACTION_TIME = 2.
 
 class Direction(object):
@@ -78,8 +81,16 @@ class DungeonTileSet(cocos.tiles.TileSet):
         super(DungeonTileSet, self).__init__(id=0, properties={})
 
         ground_image = pyglet.image.load(GROUND_IMAGE_PATH)
+        glTexParameteri(ground_image.texture.target, GL_TEXTURE_MAG_FILTER, GL_NEAREST) 
+        glTexParameteri(ground_image.texture.target, GL_TEXTURE_MIN_FILTER, GL_NEAREST)
+
         obstacle_image = pyglet.image.load(OBSTACLE_IMAGE_PATH)
+        glTexParameteri(obstacle_image.texture.target, GL_TEXTURE_MAG_FILTER, GL_NEAREST) 
+        glTexParameteri(obstacle_image.texture.target, GL_TEXTURE_MIN_FILTER, GL_NEAREST)
+
         goal_image = pyglet.image.load(GOAL_IMAGE_PATH)
+        glTexParameteri(goal_image.texture.target, GL_TEXTURE_MAG_FILTER, GL_NEAREST) 
+        glTexParameteri(goal_image.texture.target, GL_TEXTURE_MIN_FILTER, GL_NEAREST)
 
         ground_properties = {'obstacle': False, 'goal': True}
         obstacle_properties = {'obstacle': True, 'goal': True}
@@ -105,6 +116,11 @@ class Game(cocos.scene.Scene):
         self.hero = Hero()
         self.character_layer.add(self.hero)
         self.dungeon.add_hero(self.hero)
+
+    def draw(self, *args, **kwargs):
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST) 
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST)
+        super().draw(*args, **kwargs)
 
     def set_view(self, screen_size):
 
@@ -197,12 +213,11 @@ class Dungeon(cocos.tiles.RectMapLayer):
 
 if __name__ == '__main__':
     # director init takes the same arguments as pyglet.window
-    cocos.director.director.init(width=SCREEN_SIZE[0], height=SCREEN_SIZE[1], caption='Level 1')
-
+    window = cocos.director.director.init(width=SCREEN_SIZE[0], height=SCREEN_SIZE[1], autoscale=True, caption='Level 1')
+    window.set_size(SCREEN_SIZE[0]*SCALE_FACTOR, SCREEN_SIZE[1]*SCALE_FACTOR)
     dungeon_size = (4, 5)
     game = Game(dungeon_size)
     game.set_view(SCREEN_SIZE)
-
     game.hero.turn_left()
     game.hero.move()
     cocos.director.director.run(game)
