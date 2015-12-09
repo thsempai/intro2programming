@@ -4,10 +4,17 @@
 \usepackage[utf8]{inputenc}
 \usepackage{epigraph}
 \usepackage[T1]{fontenc}
+\usepackage{listings}
+\usepackage{graphicx}
+\graphicspath{{images/}}
+
+%%macro
+
+\newcommand{\path}[1]{\texttt{#1}}
 
 \begin{document}
-\title{Inititation à la programmation}
-\author{Bastien Gorissen & Thomas Stassin}
+\title{{\huge Inititation à la programmation}}
+\author{Bastien Gorissen \& Thomas Stassin}
 \date{Année 2016}
 
 \maketitle
@@ -22,9 +29,14 @@
 
 Un langage de programmation est un moyen d’intéragir avec l’ordinateur afin de lui donner des instructions, le langage qui est \textit{intelligible}, sera \textit{interprété} afin d’être compris par la machine.
 
+\begin{figure}[hb]
+\centering
+\includegraphics[scale=0.5]{translate_code.png} 
+\end{figure}
+
 \subsection{Exercice}
 
-Executer le script se trouvant dans le dossier $<dossier_path$>
+Executer le script se trouvant dans le dossier \path{<dossier\_path>}
 
 \end{document}
 
