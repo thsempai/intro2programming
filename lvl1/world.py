@@ -38,16 +38,29 @@ class Hero(cocos.sprite.Sprite):
 
     def __init__(self):
         hero_image = pyglet.image.load(HERO_IMAGES_PATHS[Direction.north])
-        super(Hero, self).__init__(hero_image, (0, 0), anchor=(0, -TILE_SIZE[1] / 3))
+        super().__init__(hero_image, (0, 0), anchor=(0, -TILE_SIZE[1] / 3))
 
         self.dungeon = None
         self.sens = Direction.north
+        self.__action = None
+
+        self.__images = []
+
+    def __append_action(self, action):
+        if self.__action:
+            self.__action = self.__action + action
+        else:
+            self.__action = action
+
+    def __change_image(self):
+        image = self.__images.pop(0)
+        self.image = image
 
     def move(self):
         if self.dungeon.hero_move(self.sens):
             move_by = self.sens[0] * TILE_SIZE[0], self.sens[1] * TILE_SIZE[1]
             action = cocos.actions.MoveBy(move_by, ACTION_TIME)
-            self.do(action)
+            self.__append_action(action)
 
     def turn_right(self):
         if self.sens == Direction.north:
@@ -59,7 +72,10 @@ class Hero(cocos.sprite.Sprite):
         else:
             self.sens = Direction.north
 
-        self.image = pyglet.image.load(HERO_IMAGES_PATHS[self.sens])
+        image = pyglet.image.load(HERO_IMAGES_PATHS[self.sens])
+        self.__images.append(image)
+        action = cocos.actions.instant_actions.CallFunc(self.__change_image)
+        self.__append_action(action)
 
     def turn_left(self):
         if self.sens == Direction.north:
@@ -71,7 +87,13 @@ class Hero(cocos.sprite.Sprite):
         else:
             self.sens = Direction.south
 
-        self.image = pyglet.image.load(HERO_IMAGES_PATHS[self.sens])
+        image = pyglet.image.load(HERO_IMAGES_PATHS[self.sens])
+        self.__images.append(image)
+        action = cocos.actions.instant_actions.CallFunc(self.__change_image)
+        self.__append_action(action)
+
+    def go(self):
+        self.do(self.__action)
 
 
 class DungeonTileSet(cocos.tiles.TileSet):
@@ -132,6 +154,10 @@ class Game(cocos.scene.Scene):
             int(center[1] - dungeon_size[1] / 2 * TILE_SIZE[1]))
 
         self.position = origin
+
+    def run(self):
+        self.hero.go()
+        cocos.director.director.run(self)
 
 
 class Dungeon(cocos.tiles.RectMapLayer):
@@ -215,9 +241,14 @@ if __name__ == '__main__':
     window = cocos.director.director.init(
         width=SCREEN_SIZE[0], height=SCREEN_SIZE[1], autoscale=True, caption='Level 1')
     window.set_size(SCREEN_SIZE[0]*SCALE_FACTOR, SCREEN_SIZE[1]*SCALE_FACTOR)
-    dungeon_size = (4, 5)
+    dungeon_size = (5, 5)
     game = Game(dungeon_size)
     game.set_view(SCREEN_SIZE)
+    game.hero.move()
     game.hero.turn_left()
     game.hero.move()
-    cocos.director.director.run(game)
+    game.hero.move()
+    game.hero.move()
+    game.hero.turn_right()
+    game.hero.move()
+    game.run()
