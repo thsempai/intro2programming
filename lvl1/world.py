@@ -5,7 +5,6 @@
 import cocos
 import pyglet
 
-from enum import Enum
 
 GROUND_IMAGE_PATH = r'assets/ground.png'
 OBSTACLE_IMAGE_PATH = r'assets/obstacle.png'
@@ -18,6 +17,7 @@ GOAL = 'goal'
 TILE_SIZE = (16, 16)
 SCREEN_SIZE = (800, 600)
 ACTION_TIME = 2.
+
 
 class Direction(object):
     north = (0, 1)
