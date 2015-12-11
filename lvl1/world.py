@@ -93,7 +93,8 @@ class Hero(cocos.sprite.Sprite):
         self.__append_action(action)
 
     def go(self):
-        self.do(self.__action)
+        if self.__action:
+            self.do(self.__action)
 
 
 class DungeonTileSet(cocos.tiles.TileSet):
@@ -125,6 +126,10 @@ class DungeonTileSet(cocos.tiles.TileSet):
 class Game(cocos.scene.Scene):
 
     def __init__(self, dungeon_size):
+        window = cocos.director.director.init(
+            width=SCREEN_SIZE[0], height=SCREEN_SIZE[1], autoscale=True, caption='Level 1')
+        window.set_size(SCREEN_SIZE[0]*SCALE_FACTOR, SCREEN_SIZE[1]*SCALE_FACTOR)
+
         super(Game, self).__init__()
         self.dungeon = Dungeon(dungeon_size)
 
@@ -156,6 +161,7 @@ class Game(cocos.scene.Scene):
         self.position = origin
 
     def run(self):
+        self.set_view(SCREEN_SIZE)
         self.hero.go()
         cocos.director.director.run(self)
 
@@ -238,12 +244,9 @@ class Dungeon(cocos.tiles.RectMapLayer):
 
 if __name__ == '__main__':
     # director init takes the same arguments as pyglet.window
-    window = cocos.director.director.init(
-        width=SCREEN_SIZE[0], height=SCREEN_SIZE[1], autoscale=True, caption='Level 1')
-    window.set_size(SCREEN_SIZE[0]*SCALE_FACTOR, SCREEN_SIZE[1]*SCALE_FACTOR)
+
     dungeon_size = (5, 5)
     game = Game(dungeon_size)
-    game.set_view(SCREEN_SIZE)
     game.hero.move()
     game.hero.turn_left()
     game.hero.move()
