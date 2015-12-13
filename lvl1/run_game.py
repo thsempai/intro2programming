@@ -5,7 +5,7 @@ def main():
 
     dungeon_size = (5, 5)
     game = world.Game(dungeon_size)
-    hero = game.hero
+    hero = Game.hero
 
     # >>> action du hero
 

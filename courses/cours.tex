@@ -7,13 +7,33 @@
 \usepackage{listings}
 \usepackage{graphicx}
 \usepackage{parskip}
+\usepackage{xcolor}
+
+
+%% config
 \graphicspath{{images/}}
+\lstset{
+    language={Python},
+    basicstyle=\ttfamily\small, 
+    tabsize=4,
+    keywordstyle=\bold,
+    commentstyle=\color{gray},
+    backgroundcolor=\color{lightgray},
+    frame=single
+    showtabs=false,
+    showspaces=false,
+    showstringspaces=false
+}
 
 %%macro
 
 \newcommand{\path}[1]{\texttt{#1}}
 
+\newcommand{\codeintext}[1]{\texttt{#1}}
+
 \begin{document}
+
+
 \title{{\huge Inititation à la programmation}}
 \author{Bastien Gorissen \& Thomas Stassin}
 \date{Année 2016}
@@ -37,22 +57,57 @@ sera \emph{interprété} afin d’être compris par la machine.
 \includegraphics[scale=0.5]{translate_code.png} 
 \end{figure}
 
-\subsection{Exercice}
+\subsection{Stage 1}
  
-Executer le script se trouvant dans le dossier \path{<dossier\_path>}
+Executer le script se trouvant dans le dossier \path{lv1/run\_game.py}
 
 \section{Commander à l'ordinateur}
 
 Pour ``commander'' l’ordinateur, on lui donne des \emph{instructions}, le plus souvent, c’est instructions seront regroupées dans un \emph{script}.
 
-\subsection{Exercice}
+\subsection{Stage 2}
 
-Dans l’exercice précédent, nous avons exécuté le script \path{<script\_name>}, ce script est remplie d’instructions, dont celle-ci:
+Dans l’exercice précédent, nous avons exécuté le script \path{run\_game.py}, ce script est remplie d’instructions, dont celle-ci:
 
-%%ajouter code qui définit les dimensions du donjons
+\begin{lstlisting}
+    dungeon_size = (5, 5)
+    game = world.Game(dungeon_size)
+    game.run()
+\end{lstlisting}
 
-Que ce passerait t’il si on modifiait l’instruction dans le script?
+Que ce passerait t’il si on modifiait l’instruction qui définit la grandeur du donjon dans le script?
+Changez les données de dimension du donjon dans le script et observez ce qu'il se passe lors de l'exécution du script.
 
+\subsection{\`{A} retenir}
+
+Python est un \emph{langage sensible à la casse}\footnote{Case sensitive en anglais.}, Ce qui veut dire qu'il fait la différence entre les majuscules et les minuscule. Autrement dit \codeintext{A} sera différent de \codeintext{a} et \codeintext{world} différent de \codeintext{World}
+
+Donc si je remplace \codeintext{world} par \codeintext{World} dans le script précédent, il généra une erreur.
+
+\begin{lstlisting}
+    dungeon_size = (5, 5)
+    game = World.Game(dungeon_size)
+    game.run()
+\end{lstlisting}
+
+Vous devriez obtenir un message ressemblant à ``\codeintext{NameError: name 'World' is not defined}''
+
+
+\section{Les instructions de sorties}
+
+Il existe plusieurs sorte d’instruction, l’une d’elles sont les instructions de sortie.
+Une instruction de sortie envoie vers une “sortie” se qu’on lui donne.
+Une des sortie les plus couramment utilisé est la console et python, l’instruction de sortie vers la console est \codeintext{print}
+
+Et donc voici le classique, mais indémodable “Hello World” en python
+
+\begin{lstlisting}
+    print('Hello World!')
+\end{lstlisting}
+
+
+\subsection{Stage 3}
+Lorsque le donjon est créé, signalez-le par un message dans la \emph{console}.
 \end{document}
 
 Matière:
@@ -66,42 +121,7 @@ Utiliser la variable du héro pour le bouger par script
 Bonus Stage:
     Faire sortir le héros par script du stage.
 
-Level 1
 
-<Mettre ici tout la partie introduction>
-
-Qu’est-ce qu’un langage de programmation?
-
-Un langage de programmation est une convention pour donner des ordres à un ordinateur. Ce n’est pas censé être obscur, bizarre et plein de pièges subtils. Ca, ce sont les caractéristiques de la magie.
-
-    - Dave Small
-
-
-Un langage de programmation est un moyen d’intéragir avec l’ordinateur afin de lui donner des instructions, le langage qui est  “intelligible”, sera “interprété” afin d’être compris par la machine.
-
-
-
-
-
-Pour “commander” l’ordinateur, on lui donne des instructions, le plus souvent, c’est    instructions seront regroupées dans un script.
-Dans l’exercice précédent, nous avons exécuté le script <script_name>, ce script est remplie d’instructions, dont celle-ci:
-
-<Ajouter ici le code qui definit la dimension du donjon>
-
-
-Que ce passerait t’il si on modifiait l’instruction dans le script.
-
-Exercice 2:
-Changez les données de dimension du donjon dans le script.
-
-
-Il existe plusieurs sorte d’instruction, l’une d’elles sont les instructions de sortie.
-Une instruction de sortie envoie vers une “sortie” se qu’on lui donne.
-Une des sortie les plus couramment utilisé est la console et Python, l’instruction de sortie vers la console est print
-
-Et donc voici le classique, mais indémodable “Hello World” en Python
-
-print(‘Hello World!’)
 
 Exercice 3:
 
@@ -117,7 +137,7 @@ Dans le cas de notre jeu, le donjon, ainsi que le héro sont contenu chacun dans
 
 <Montrer les lignes de code>
 
-En Python, l’affectation d’une valeur se fait avec l’opérateur =
+En python, l’affectation d’une valeur se fait avec l’opérateur =
 
 Dans a=3, On affecte 3 à la variable a
 
