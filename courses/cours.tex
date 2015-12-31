@@ -1,4 +1,4 @@
-\documentclass[12pt,a4paper]{book}
+\documentclass[12pt,a4paper]{report}
 
 \usepackage[francais]{babel}
 \usepackage[utf8]{inputenc}
@@ -39,7 +39,7 @@
 \date{Année 2016}
 
 \maketitle
-
+\tableofcontents
 \chapter{Level 1}
 
 %%<Mettre ici tout la partie introduction>
@@ -80,7 +80,7 @@ Changez les données de dimension du donjon dans le script et observez ce qu'il 
 
 \subsection{\`{A} retenir}
 
-Python est un \emph{langage sensible à la casse}\footnote{Case sensitive en anglais.}, Ce qui veut dire qu'il fait la différence entre les majuscules et les minuscule. Autrement dit \codeintext{A} sera différent de \codeintext{a} et \codeintext{world} différent de \codeintext{World}
+Python est un \emph{langage sensible à la casse}\footnote{\textit{Case sensitive} en anglais.}, Ce qui veut dire qu'il fait la différence entre les majuscules et les minuscule. Autrement dit \codeintext{A} sera différent de \codeintext{a} et \codeintext{world} différent de \codeintext{World}
 
 Donc si je remplace \codeintext{world} par \codeintext{World} dans le script précédent, il généra une erreur.
 
@@ -92,7 +92,6 @@ Donc si je remplace \codeintext{world} par \codeintext{World} dans le script pr�
 
 Vous devriez obtenir un message ressemblant à ``\codeintext{NameError: name 'World' is not defined}''
 
-
 \section{Les instructions de sorties}
 
 Il existe plusieurs sorte d’instruction, l’une d’elles sont les instructions de sortie.
@@ -102,17 +101,58 @@ Une des sortie les plus couramment utilisé est la console et python, l’instru
 Et donc voici le classique, mais indémodable “Hello World” en python
 
 \begin{lstlisting}
-    print('Hello World!')
+    print("Hello World!")
 \end{lstlisting}
 
 
 \subsection{Stage 3}
 Lorsque le donjon est créé, signalez-le par un message dans la \emph{console}.
+
+\section{Les variables}
+
+Souvent, il sera utile de stocké certaines valeur tout au long de l’exécution de votre code.
+Par exemple pour stocker la valeur d’un calcul, où même afin de réutiliser ses valeurs plusieurs fois. Pour stocker des valeurs, on utilise des \emph{variables}.
+
+La \emph{variables} est un moyen de stocker une valeur quelconque (un nombre, du texte, voir même des objets plus complexes) dans la mémoire du programme.
+
+Dans le cas de notre jeu, le donjon, ainsi que le héro sont contenu chacun dans une \emph{variable}.
+
+\begin{lstlisting}
+dungeon_size = (5, 5)
+game = world.Game(dungeon_size)
+hero = Game.hero
+\end{lstlisting}
+
+En python, l’\emph{affectation} d’une valeur se fait avec l’opérateur \emph{=}
+
+Dans \codeintext{a=3}, On affecte \codeintext{3} à la variable \codeintext{a}\footnote{ En Python il suffit d’affecter une valeur à une variable pour qu’elle commence à exister, ce n’est pas vrai pour la plus part des langages (comme le C\# par exemple).}
+
+\subsection{Stage 4}
+Faites en sorte de stocker les dimensions du donjon dans des variables (par exemple \codeintext{longueur} et \codeintext{largeur}).
+
+\section{Opération sur une chaîne de caractère}
+
+Il vous sera parfois utile de savoir manipuler des chaînes de caractères, l'exemple classique est dans une ligne de dialogue, On voudrait dire au héro le nombre d'ennemis qui lui reste à tuer avant de finir la quête, or lorsque que vous codez, vous ne connaissez pas le nombre d'ennemis. Vous avez surement stocké cette information dans une variable et donc vous allez devoir intégrer cette variable à votre ligne de dialogue.
+
+\subsection{Conversion}
+Il y un moyen facile de convertir une variable en chaine de caractères\footnote{En python les chaine de caractère on le \emph{type} \codeintext{str} pour pour le mot anglais \textit{string}, qui veut dire chaîne}, il suffit d'utiliser la me fonction \codeintext{str}.
+
+Si je voulais convertir, la variable \codeintext{nbr\_enemies} qui contient le chiffre \codeintext{3} je procéderais comme suit:
+
+\begin{lstlisting}
+	nbr_enemies = 3
+	nbr_enemies = str(nbr_enemies)
+\end{lstlisting}
+
+A la fin de l'exécution de ce petit script, \codeintext{nbr\_enemies} ne vaut plus \codeintext{3} mais \codeintext{"3"}.
+
+\subsection{Concaténation}
+
 \end{document}
 
 Matière:
 Les variables (première approche)
-conversion d’une variable en chaine de caractère (str)
+conversion d’une variable en chaine de caractère (str) 
 
 Exercice:
 Utiliser l'instruction de sortie pour afficher les dimension du monde dans la console
@@ -127,19 +167,17 @@ Exercice 3:
 
 Lorsque le donjon est créé, signalez-le par un message dans la console.
 
-
 Souvent, il sera utile de stocké certaines valeur tout au long de l’éxécution de votre code.
 Par exemple pour stocké la valeur d’un calcul, où même afin de réutilisé ses valeurs plusieurs fois. Pour stocker les valeurs, on utilise des variables.
 
 La variables est un moyen de stocké une valeur quelconque (un nombre, du texte, voir même des objets plus complexes) dans la mémoire du programme.
 
-Dans le cas de notre jeu, le donjon, ainsi que le héro sont contenu chacun dans une variable.
+Dans le cas de notre jeu, le donjon, le jeu, ainsi que le héro sont contenu chacun dans une variable.
 
-<Montrer les lignes de code>
 
 En python, l’affectation d’une valeur se fait avec l’opérateur =
 
-Dans a=3, On affecte 3 à la variable a
+
 
 
 
