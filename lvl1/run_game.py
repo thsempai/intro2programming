@@ -3,7 +3,7 @@ import world
 
 def main():
 
-    dungeon_size = (10, 10)
+    dungeon_size = (10, 8)
     game = world.Game(dungeon_size)
     hero = game.hero
 

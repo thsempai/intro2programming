@@ -202,7 +202,8 @@ class Dungeon(cocos.tiles.RectMapLayer):
                     column.append(OBSTACLE)
                 elif x == 1 and y == self.dungeon_size[1] - 2:
                     column.append(GOAL)
-                elif (x+y) % 5 == 0 and x%2 == 0:
+                elif (y+x) % 3 == 0 and x % 2 == 0 and x != self.dungeon_size[0] - 2 \
+                        or x == 1 and y == self.dungeon_size[1] - 5 and y != 1:
                     column.append(OBSTACLE)
                 else:
                     column.append(GROUND)
