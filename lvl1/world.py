@@ -202,6 +202,8 @@ class Dungeon(cocos.tiles.RectMapLayer):
                     column.append(OBSTACLE)
                 elif x == 1 and y == self.dungeon_size[1] - 2:
                     column.append(GOAL)
+                elif (x+y) % 5 == 0 and x%2 == 0:
+                    column.append(OBSTACLE)
                 else:
                     column.append(GROUND)
                 cells_column.append(None)
@@ -245,7 +247,7 @@ class Dungeon(cocos.tiles.RectMapLayer):
 if __name__ == '__main__':
     # director init takes the same arguments as pyglet.window
 
-    dungeon_size = (5, 5)
+    dungeon_size = (10, 10)
     game = Game(dungeon_size)
     game.hero.move()
     game.hero.turn_left()

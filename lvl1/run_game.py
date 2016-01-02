@@ -3,9 +3,9 @@ import world
 
 def main():
 
-    dungeon_size = (5, 5)
+    dungeon_size = (10, 10)
     game = world.Game(dungeon_size)
-    hero = Game.hero
+    hero = game.hero
 
     # >>> action du hero
 
