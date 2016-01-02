@@ -25,6 +25,7 @@
     showstringspaces=false
 }
 
+\renewcommand{\labelitemi}{∙}
 %%macro
 
 \newcommand{\path}[1]{\texttt{#1}}
@@ -39,7 +40,7 @@
 \date{Année 2016}
 
 \maketitle
-\tableofcontents
+%% \tableofcontents
 \chapter{Level 1}
 
 %%<Mettre ici tout la partie introduction>
@@ -113,7 +114,7 @@ Lorsque le donjon est créé, signalez-le par un message dans la \emph{console}.
 Souvent, il sera utile de stocké certaines valeur tout au long de l’exécution de votre code.
 Par exemple pour stocker la valeur d’un calcul, où même afin de réutiliser ses valeurs plusieurs fois. Pour stocker des valeurs, on utilise des \emph{variables}.
 
-La \emph{variables} est un moyen de stocker une valeur quelconque (un nombre, du texte, voir même des objets plus complexes) dans la mémoire du programme.
+La \emph{variables} est un moyen de stocker une valeur quelconque (un nombre, du texte, voir même des \emph{objets} plus complexes) dans la mémoire du programme.
 
 Dans le cas de notre jeu, le donjon, ainsi que le héro sont contenu chacun dans une \emph{variable}.
 
@@ -147,39 +148,55 @@ Si je voulais convertir, la variable \codeintext{nbr\_enemies} qui contient le c
 A la fin de l'exécution de ce petit script, \codeintext{nbr\_enemies} ne vaut plus \codeintext{3} mais \codeintext{"3"}.
 
 \subsection{Concaténation}
+Le faite de coller deux chaînes de caractères l'une derrière l'autre porte un nom: \emph{la concaténation}.
+En Python, l'opérateur pour \emph{concatener} deux variables ensemble est l'opérateur \codeintext{+}.
+
+Par exemple, si je voulais concatener la variable contenant le nom du héro avec un message cela donnerai.
+ 
+\begin{lstlisting}
+	message = ", il te reste des ennemis à tuer."
+	message = hero_name + message
+\end{lstlisting}
+
+Donc si le héro se nomme Brutor, la chaîne de caractère en fin de script sera égale à \codeintext{"Brutor, il te reste des ennemis à tuer."}
+
+On peut même aller plus loin en mêlant la \emph{conversion} et la \emph{concaténation} en indiquant aussi dans le message le nombre d'ennemis qu'il reste.
+
+\begin{lstlisting}
+	message = ", il te reste " + str(nbr_enemies) + " ennemis à tuer."
+	message = hero_name + message
+\end{lstlisting}
+
+\subsection{Stage 5}
+Lorsque le donjon est créer, indiquer dans un message à la console la longueur et la largeur de celui-ci.
+
+\section{Les fonctions et les méthodes, première approche}
+
+Pour terminer ce premier level, on va mettre des mots sur deux choses que l'on a vu précédemment. Les \emph{fonction globales} et les \emph{méthodes}
+Nous avons vu déjà vu plusieurs fonctions dans les parties précédentes:
+\begin{itemize}
+	\item[$\bullet$] \codeintext{print}
+	\item[$\bullet$] \codeintext{str}
+\end{itemize}
+
+C'est fonction sont dîtes "globales". Ce type de fonction n'est pas liées à un type d'\emph{objet}.
+
+Il existe aussi une série de fonction liées à des \emph{objets}, par exemple la méthode \emph{run} qui de la variable \emph{game}.
+On appelle ses fonctions des \emph{méthodes} et elles sont liées à un type d'objets en particulié.
+
+\subsection{Stage 6}
+La variable du héro, sobrement appelée \codeintext{hero} est du type \codeintext{Hero}, c'est un type de variable que nous avons construit pour le jeu\footnote{Nous verrons plus tard qu'il est possible de définir ses propres type et de leur de donner les caractéristiques que l'on désire.}. Nous avons donné trois \emph{méthodes} à cette variable:
+
+\begin{description}
+	\item[\codeintext{turn\_left}:] ce qui fait tourner le héro à gauche.
+	\item[\codeintext{turn\_right}:] ce qui fait tourner le héro à droite.
+	\item[\codeintext{move}:] ce qui fait avancer le héro d'une "case".
+\end{itemize}
+
+Essayez de faire bouger le héro grâce à ces trois méthodes.
+
+\section{Bonus Stage}
+Pour compléter le stage bonus il faut que vous arriviez à ammener le héro sur la sortie du donjon. La sortie est représentée par la case bleu en haut à gauche de la pièce.
 
 
 \end{document}
-
-Matière:
-Les variables (première approche)
-conversion d’une variable en chaine de caractère (str) 
-
-Exercice:
-Utiliser l'instruction de sortie pour afficher les dimension du monde dans la console
-Utiliser la variable du héro pour le bouger par script
-
-Bonus Stage:
-    Faire sortir le héros par script du stage.
-
-
-
-Exercice 3:
-
-Lorsque le donjon est créé, signalez-le par un message dans la console.
-
-Souvent, il sera utile de stocké certaines valeur tout au long de l’éxécution de votre code.
-Par exemple pour stocké la valeur d’un calcul, où même afin de réutilisé ses valeurs plusieurs fois. Pour stocker les valeurs, on utilise des variables.
-
-La variables est un moyen de stocké une valeur quelconque (un nombre, du texte, voir même des objets plus complexes) dans la mémoire du programme.
-
-Dans le cas de notre jeu, le donjon, le jeu, ainsi que le héro sont contenu chacun dans une variable.
-
-
-En python, l’affectation d’une valeur se fait avec l’opérateur =
-
-
-
-
-
-Exercices 4:
