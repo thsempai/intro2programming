@@ -1,6 +1,7 @@
 \chapter{Level 1}
-
-%%<Mettre ici tout la partie introduction>
+\begin{figure}[ht]
+\includegraphics[scale=1]{stage_0.png} 
+\end{figure}
 
 \section{Qu’est-ce qu’un langage de programmation?}
 
@@ -20,7 +21,10 @@ sera \emph{interprété} afin d’être compris par la machine.
 Si vous ouvrez le script \path{run\_game.py}, vous pourrez voir que certaines lignes commencent par \codeintext{\#}. Celles-ci seront ignorées par l'ordinateur. Ce sont des \emph{commentaires} destinés à clarifier le code.
 
 \subsection{Stage 1}
- 
+\begin{figure}[ht]
+\includegraphics[scale=1]{stage_1.png} 
+\end{figure}
+
 Exécuter le script se trouvant dans le dossier \path{lv1/run\_game.py}
 
 \section{Commander à l'ordinateur}
@@ -28,6 +32,9 @@ Exécuter le script se trouvant dans le dossier \path{lv1/run\_game.py}
 Pour ``commander'' l’ordinateur, on lui donne des \emph{instructions}, le plus souvent, ces instructions seront regroupées dans un \emph{script}.
 
 \subsection{Stage 2}
+\begin{figure}[ht]
+\includegraphics[scale=1]{stage_2.png} 
+\end{figure}
 
 Dans l’exercice précédent, nous avons exécuté le script \path{run\_game.py}, ce script est rempli d’instructions, dont celles-ci:
 
@@ -68,6 +75,10 @@ Et donc voici le classique, mais indémodable “Hello World” en Python :
 
 
 \subsection{Stage 3}
+\begin{figure}[ht]
+\includegraphics[scale=1]{stage_3.png} 
+\end{figure}
+
 Lorsque le donjon est créé, signalez-le par un message dans la \emph{console}.
 
 \section{Les variables}
@@ -90,6 +101,10 @@ En Python, l’\emph{affectation} d’une valeur se fait avec l’opérateur \em
 Dans \codeintext{a=3}, on affecte \codeintext{3} à la variable \codeintext{a}\footnote{ En Python il suffit d’affecter une valeur à une variable pour qu’elle commence à exister, ce n’est pas vrai pour la plupart des langages (comme le C\# par exemple).}
 
 \subsection{Stage 4}
+\begin{figure}[ht]
+\includegraphics[scale=1]{stage_4.png} 
+\end{figure}
+
 Faites en sorte de stocker les dimensions du donjon dans des variables (par exemple \codeintext{length} et \codeintext{width}\footnote{Il est courant d'utiliser des noms de variables en anglais. La programmation est un monde très anglophone.}).
 
 \section{Opérations sur une chaîne de caractères}
@@ -129,6 +144,10 @@ On peut même aller plus loin en mêlant la \emph{conversion} et la \emph{concat
 \end{lstlisting}
 
 \subsection{Stage 5}
+\begin{figure}[ht]
+\includegraphics[scale=1]{stage_5.png} 
+\end{figure}
+
 Lorsque le donjon est créé, indiquer dans un message à la console la longueur et la largeur de celui-ci.
 
 \section{Les fonctions et les méthodes, première approche}
@@ -146,6 +165,10 @@ Il existe aussi une série de fonctions liées à des \emph{objets}, par exemple
 On appelle ces fonctions des \emph{méthodes} et elles sont liées à un type d'objets en particulier.
 
 \subsection{Stage 6}
+\begin{figure}[ht]
+\includegraphics[scale=1]{stage_6.png} 
+\end{figure}
+
 La variable du héros, sobrement appelée \codeintext{hero} est du type \codeintext{Hero}, c'est un type de variable que nous avons construit pour le jeu\footnote{Nous verrons plus tard qu'il est possible de définir ses propres types et de leur donner les caractéristiques que l'on désire.}. Nous avons donné trois \emph{méthodes} à cette variable:
 
 \begin{description}
@@ -157,5 +180,9 @@ La variable du héros, sobrement appelée \codeintext{hero} est du type \codeint
 Essayez de faire bouger le héros grâce à ces trois méthodes.
 
 \section{Bonus Stage}
+\begin{figure}[ht]
+\includegraphics[scale=1]{stage_bonus.png} 
+\end{figure}
+
 Pour compléter le stage bonus il faut que vous arriviez à amener le héros sur la sortie du donjon. La sortie est représentée par la case bleue en haut à gauche de la pièce.
 Le donjon doit au moins avoir une longueur et une largeur de 7.
