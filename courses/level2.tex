@@ -1,0 +1,99 @@
+\chapter{Level 2 - Le labyrinthe}
+
+Savoir commander l'ordinateur est une chose, encore faut-il arriver à lui faire faire des choses intelligentes. Heureusement, tous les languages de programmation proposent une série d'outils qui vont permettre de donner des instructions complexes à la machine.
+
+\section{La boucle \texttt{for}, premier acte}
+
+S'il y a bien une chose pour laquelle les ordinateurs sont doués, c'est la répétitions. Contrairement aux humains, un ordinateur ne se fatigue pas, ni ne se lasse des tâches répétitives. Au contraire, la possibilité d'effectuer rapidement des opérations similaires sur un grand nombre d'objets ou de données constitue l'une des plus grande force de l'informatique.
+
+D'ailleurs, au coeur de tout jeu vidéo, on trouve une boucle. En simplifiant, l'ordinateur est pris dans un cycle comme suit :
+
+\begin{lstlisting}
+    Tant que le joueur ne quitte pas le jeu:
+        Vérifier si un bouton a été pressé, si oui, calculer la réaction
+        Afficher le jeu après avoir effectué les modifications
+        Recommencer
+    \caption{Test}
+\end{lstlisting}
+
+Les boucles sont donc un élément extrêmement important dans la boite à outils d'un programmeur. Mais avant d'écrire notre première boucle, faisons un petit détour pour apprendre un élément qui nous aidera.
+
+\subsection{\texttt{range()} ou comment générer une séquence}
+
+Python propose une série de fonctions permettant de gagner un temps précieux dans l'exécution de tâches courantes. L'une des plus courante est \texttt{range()}, qui permet de générer une série de nombres entiers.
+
+La façon la plus simple de l'utiliser est simplement :
+
+\begin{lstlisting}
+    range(10)
+\end{lstlisting}
+
+Ce qui génère la série suivante :
+
+\begin{lstlisting}
+    [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+\end{lstlisting}
+
+Ou, en généralisant, si \texttt{N} est un nombre entier :
+
+\begin{lstlisting}
+    range(N)
+\end{lstlisting}
+
+Le code renverra la série suivante :
+
+\begin{lstlisting}
+    [0, 1, 2, ... , N-1]
+\end{lstlisting}
+
+Le \texttt{N-1} est important ! La liste contient bien \texttt{N} éléments, mais ceux-ci commencent à \texttt{0}, et s'arrêtent à \texttt{N-1}. C'est une subtilité, mais à laquelle on s'habitue assez vite. En informatique, on commence souvent à compter à partir de 0 et non de 1.
+
+Pour visualiser le résultat de \texttt{range()}, on peut utiliser la fonction \texttt{list()} qui crééera une liste intelligible pour nous à partir de la séquence renvoyée par \texttt{range()}. Mais un exemple vaut mieux qu'un long discours :
+
+\begin{lstlisting}
+    my_sequence = range(10)
+    my_list = list(my_sequence)
+    print(my_sequence)
+\end{lstlisting}
+
+A propos, on peut enchaîner les commandes pour condenser un peu le code :
+
+\begin{lstlisting}
+    print(list(range(10)))
+\end{lstlisting}
+
+Mais attention à ne pas se perdre dans les parenthèses !
+
+Avant de voir comment utiliser \texttt{range()} pour contrôler une boucle, voyons encore rapidement 2 autres éléments.
+
+Il est possible de générer une séquence qui va de \texttt{A} à \texttt{N-1} en écrivant
+
+\begin{lstlisting}
+    range(A, N)
+\end{lstlisting}
+
+Et si on voulait générer une séquence qui progresse par pas de 5 par exemple ?
+
+\begin{lstlisting}
+    range(0, N, 5)
+\end{lstlisting}
+
+Pour résumer:
+
+\begin{lstlisting}
+    range(start, end, step)
+\end{lstlisting}
+
+Où \texttt{start} est le point de départ de la séquence, \texttt{end} la fin de la séquence +1, et \texttt{step} l'incrément entre deux éléments de la séquence.
+
+Bonus : comment faire une séquence qui compte de 10 à 1 ? Une idée ?
+
+\subsection{Le réveil de la \texttt{for}(ce)}
+
+Passons sur le titre grammaticalement incorrect de cette section, et intéressons-nous au véritable sujet qui nous intéresse : Comment créer une boucle en Python ?
+
+Il existe plusieurs instructions de boucle en Python, la première que nous allons voir est une boucle dite \emph{itérative}, aussi appellée boucle \texttt{for}. 
+
+\section{Comparaisons}
+
+\section{Prendre des décisions}
