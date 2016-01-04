@@ -139,7 +139,8 @@ Donc si le héro se nomme Brutor, la chaîne de caractères en fin de script ser
 On peut même aller plus loin en mêlant la \emph{conversion} et la \emph{concaténation} en indiquant aussi dans le message le nombre d'ennemis qu'il reste.
 
 \begin{lstlisting}
-	message = ", il te reste " + str(nbr_enemies) + " ennemis à tuer."
+	message = ", il te reste " + str(nbr_enemies)"
+	message = message + " ennemis à tuer."
 	message = hero_name + message
 \end{lstlisting}
 
@@ -175,7 +176,7 @@ La variable du héros, sobrement appelée \codeintext{hero} est du type \codeint
 	\item[\codeintext{turn\_left}:] ce qui fait tourner le héros à gauche.
 	\item[\codeintext{turn\_right}:] ce qui fait tourner le héros à droite.
 	\item[\codeintext{move}:] ce qui fait avancer le héros d'une "case".
-\end{itemize}
+\end{description}
 
 Essayez de faire bouger le héros grâce à ces trois méthodes.
 
