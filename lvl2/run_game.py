@@ -22,6 +22,7 @@ def game_update(hero):
     #         else:
     #             hero.turn_right()
     #             hero.turn_right()
+    pass
 
 if __name__ == '__main__':
     main()
