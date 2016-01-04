@@ -11,14 +11,19 @@
 
 
 %% config
+\definecolor{deepblue}{rgb}{0,0,0.5}
+
 \graphicspath{{images/}}
 \lstset{
+	literate={à}{{\`a}}1,
     language={Python},
     basicstyle=\ttfamily\small, 
     tabsize=4,
     keywordstyle=\bold,
     commentstyle=\color{gray},
     backgroundcolor=\color{lightgray},
+    otherkeywords={self},
+	keywordstyle=\ttfamily\small\color{deepblue},
     frame=single
     showtabs=false,
     showspaces=false,
