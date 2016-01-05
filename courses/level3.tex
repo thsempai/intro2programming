@@ -24,12 +24,14 @@
 
 
 % présence: 10 min.
-% 8h55
-
+% -- 8h55
 % Révision:
 % 	Exercice: 30 min.
 %	Correction: 20 min.  
-% 9h45
+% -- 9h45
+% Boucle while 5 min.
+% Exercice 10 min.
+% -- 10h00
 
 
 \chapter{Level 3}
@@ -54,7 +56,7 @@ while monsters_nbr >= 0:
 	game.run()
 \end{lstlisting}
 
-La méthode \codeintext{attacks} de la variable \codeintext{} renvoie 1 ou 0, donc il est impossible de savoir combien d'itération seront nécessaire pour réduire la variable \codeintext{monsters_nbr} à 0.
+La méthode \codeintext{attacks} de la variable \codeintext{hero} renvoie 1 ou 0, donc il est impossible de savoir combien d'itération seront nécessaire pour réduire la variable \codeintext{monsters\_nbr} à 0.
 C'est donc un \emph{boucle logique} qui utilisée dans ce genre de cas.
 
 %% voir dans le level 2 comment Bastien parle  des booleens.
@@ -65,7 +67,47 @@ Dans le cas de notre script, c'est lorsque le nombre de monstre passe en-dessus 
 
 \subsection{Stage 3-1}
 
-Reprenez le \textit{bonus stage} du \textit{level 2}\footnote{au besoin le code corrigé de cette exercices ce trouve dans le script \path{bonus\_stage_2.py}}. Arrangez ce code avec une \emph{boucle logique} à la place de la \emph{boucle arithmétique} pour le héros arrête de bouger dès qu'il est arrivé à destination et non après un nombre d'itération arbitraire.
-Lorsque le héros a atteint sa cible, la variable \codeintext{hero.on_goal} vaut \codeintext{True}, dans les autres cas elle est égale à \codeintext{False}.
+Reprenez le \textit{bonus stage} du \textit{level 2}\footnote{au besoin le code corrigé de cette exercices ce trouve dans le script \path{bonus\_stage\_2.py}}. Arrangez ce code avec une \emph{boucle logique} à la place de la \emph{boucle arithmétique} pour le héros arrête de bouger dès qu'il est arrivé à destination et non après un nombre d'itération arbitraire.
+Lorsque le héros a atteint sa cible, la variable \codeintext{hero.on\_goal} vaut \codeintext{True}, dans les autres cas elle est égale à \codeintext{False}.
 
+\section{les imports}
 
+En Python, il est courant de devoir \emph{importer} le contenu de fichier dans d'autre fichier.
+\`A plusieurs reprise, on déjà vu cette instruction dans les scripts que l'on a utilisé:
+
+\begin{lstlisting}
+import world
+\end{lstlisting}
+
+Cette commande, demande à python d'\emph{importer} le contenu du fichier \path{world.py} en vue de l'utiliser plus tard.
+Dans la suite, si l'on veut faire appel au contenu de \codeintext{world}, on doit utilisé son nom suivit d'un "\codeintext{.}"
+
+Par exemple si je veux utiliser la variable \codeintext{SCREEN\_SIZE} dans mon script je vais procéder comme suit:
+
+\begin{lstlisting}
+import world
+
+scree_size = world.SCREEN_SIZE
+\end{lstlisting}
+
+On peut aussi n'\emph{importer} qu'une partie d'un module\footnote{C'est le nom que l'on donne au fichier que l'on importe}.
+
+\begin{lstlisting}
+from world import SCREEN_SIZE
+\end{lstlisting}
+
+En procédant de cette manière, on n'\emph{importe} que la variable \codeintext{SCREEN\_SIZE}.
+Cela présente l'avantage de ne devoir précédé la variable \codeintext{SCREEN\_SIZE} de \codeintext{world.}, on peut se contenter du nom de la variable seul.
+
+\begin{lstlisting}
+from world import SCREEN_SIZE
+
+screen_size = SCREEN_SIZE
+\end{lstlisting}
+
+Et enfin, on peut \emph{importer} plusieurs composant d'un module sur la même ligne.
+Si je voulais importer \codeintext{SCREEN\_SIZE} et la variable \codeintext{TILE\_SIZE}, je procéderais ainsi:
+
+\begin{lstlisting}
+from world import SCREEN_SIZE, TILE_SIZE
+\end{lstlisting}
