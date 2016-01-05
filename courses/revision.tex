@@ -1,0 +1,285 @@
+\documentclass[12pt,a4paper]{article}
+
+\usepackage[francais]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{epigraph}
+\usepackage[T1]{fontenc}
+\usepackage{listings}
+\usepackage{graphicx}
+\usepackage{parskip}
+\usepackage{xcolor}
+
+
+%% config
+\definecolor{deepblue}{rgb}{0,0,0.5}
+
+\graphicspath{{images/}}
+\lstset{
+    language={Python},
+    basicstyle=\ttfamily\small, 
+    tabsize=4,
+    keywordstyle=\bold,
+    commentstyle=\color{gray},
+    backgroundcolor=\color{lightgray},
+    otherkeywords={self},
+	keywordstyle=\ttfamily\small\color{deepblue},
+    frame=single
+    showtabs=false,
+    showspaces=false,
+    showstringspaces=false,
+    inputencoding=utf8,
+    literate={à}{{\`a}}1 {è}{{\`e}}1,
+}
+
+%%macro
+
+\newcommand{\path}[1]{\texttt{#1}}
+
+\newcommand{\codeintext}[1]{\texttt{#1}}
+\newcommand{\response}{réponse : \hrulefill\\\\}
+
+\begin{document}
+
+\section*{Révisions}
+
+% Pour chaques exercices, donnez ce qui sera inscrit pas la commande \codeintext{print}.
+
+\begin{enumerate}
+
+\item
+\begin{lstlisting}
+a = 1
+b = 2
+c = a + b
+print(c)
+\end{lstlisting}
+\response % 3
+
+\item
+\begin{lstlisting}
+a = 10
+a = 12
+print(a)
+\end{lstlisting}
+\response % 12
+
+\item
+\begin{lstlisting}
+a = 3
+b = 2 * a
+print(b)
+\end{lstlisting} 
+\response % 6
+
+\item
+\begin{lstlisting}
+a = 2
+b = 5
+c = a + c
+print(b + c)
+\end{lstlisting}
+\response % 12
+
+\item
+\begin{lstlisting}
+a = min(2, 5)
+print(a)
+\end{lstlisting}
+\response % 2
+\pagebreak
+
+\item
+\begin{lstlisting}
+a = min(2, 5)
+b = max(12, 5)
+print(a + b)
+\end{lstlisting}
+\response % 14
+
+\item
+\begin{lstlisting}
+a = min(12, 5)
+b = max(a, 1)
+print(b)
+\end{lstlisting}
+\response % 5
+
+\item
+\begin{lstlisting}
+a = min(10, 12)
+b = max(5, a)
+print(a + b)
+\end{lstlisting}
+\response % 20
+
+\item
+\begin{lstlisting}
+a = "Luke,"
+b = " je suis ton père."
+print(a + b)
+\end{lstlisting}
+\response % "Luke, je suis ton père."
+
+\item
+\begin{lstlisting}
+a = "The answer : "
+b = 42
+print(a + str(b))
+\end{lstlisting}
+\response % "The answer: 42"
+\pagebreak
+
+\item
+\begin{lstlisting}
+a = "12"
+b = int(a) + 5
+print(a + b)
+\end{lstlisting}
+\response % 17
+
+\item
+\begin{lstlisting}
+a = 3
+a = str(a) * 2
+print("Dites " + a)
+\end{lstlisting}
+\response % "Dites 33"
+
+\item
+\begin{lstlisting}
+a = 11
+a = a // 4
+print(a)
+\end{lstlisting}
+\response % 2
+
+\item
+\begin{lstlisting}
+a = range(3) 
+print(list(a))
+\end{lstlisting}
+\response % [0, 1, 2]
+
+\item
+\begin{lstlisting}
+a = [0, 2, 4]
+a = len(a)
+print(a) 
+\end{lstlisting}
+\response % 3
+\pagebreak
+
+\item
+\begin{lstlisting}
+a = [0, 2, 4, 2, -1, 3]
+a = str(len(a))
+a = a * 3
+print(a) 
+\end{lstlisting}
+\response % 666
+
+\item
+\begin{lstlisting}
+a = [0, 2, 4, 2, -1, 3]
+b = a[1]
+a = a[2] 
+print(a + b) 
+\end{lstlisting}
+\response % 6
+
+\item
+\begin{lstlisting}
+a = "Dark Vador"
+b = "Lu"
+c = b + a[3] + 'e' 
+print(c) 
+\end{lstlisting}
+\response % "Luke"
+
+\item
+\begin{lstlisting}
+a = [1, 2, 2, 4, 6]
+b = a[1:3]
+print(b) 
+\end{lstlisting}
+\response % [2, 2]
+
+\item
+\begin{lstlisting}
+a = [1, 2, 2, 4, 6]
+b = a[2:]
+print(b) 
+\end{lstlisting}
+\response %  [2, 4, 6]
+\pagebreak
+
+\item
+\begin{lstlisting}
+item_nbr = 2
+item_name = "patate"
+if nbr > 1:
+	item_name = item_name + 's'
+print(item_name)
+
+\end{lstlisting}
+\response %  "patates"
+
+\item
+\begin{lstlisting}
+item_nbr = 1
+item_name = "patate"
+if nbr > 1:
+	item_name = item_name + 's'
+print(item_name)
+
+\end{lstlisting}
+\response %  "patate"
+
+\item
+\begin{lstlisting}
+a = ""
+
+for n in range(3):
+	a = a + "B"
+print(a)
+\end{lstlisting}
+\response % "BBB"
+
+\item
+\begin{lstlisting}
+a = 1
+
+for n in range(3):
+	a = a + a
+
+print(a)
+\end{lstlisting}
+\response % 6
+
+\pagebreak
+\item
+\begin{lstlisting}
+a = ""
+
+for n in range(4):
+	a = a + str(n)
+	
+print(a)
+\end{lstlisting}
+\response % "0123"
+
+\item
+\begin{lstlisting}
+a = ""
+
+for n in range(5):
+	if n > 1 and n != 3: 
+		a = a + str(n)
+	
+print(a)
+\end{lstlisting}
+\response % "24"
+
+\end{enumerate}
+
+\end{document}
