@@ -83,4 +83,4 @@ class Maze(object):
                     wall not in wall_list):
                 wall_list.append(wall)
 
-print(Maze(21, 21))
+# print(Maze(21, 21))
