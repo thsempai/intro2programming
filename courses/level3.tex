@@ -2,7 +2,7 @@
 % Matière:
 % ● Boucle logique (while)
 % ● Comprendre l’utilité des fonction (et des méthodes)
-% ● import de module Python
+% ● import de \emph{module} Python
 % ● utilisation de nombres aléatoires
 % Exercices:
 % 1. Remplacer la boucle for du bonus stage du level 2 par une boucle while
@@ -32,14 +32,19 @@
 % Boucle while 5 min.
 % Exercice 10 min.
 % -- 10h00
-
+% Import module personnelle 5 min + Exercice : 5 min.
+% Import module Python: 5 min.
+% Excercice Random : 5 min.
+% -- 10h15
+% Explication du random: 5 min
+% Exercices sur le random: 10 min
+% PAUSE
 
 \chapter{Level 3}
 
 \section{Les boucles logiques}
 
-% checker dans la partie de Bastien comment il parle de la boucle et si il utilise le terme controler.
-On a vu dans le chapitre précédent, la boucle dîtes arithmétique. Avec cette boucle, partie de code \emph{contrôlée} par celle-ci, s'exécute un nombre de fois précis.
+On a vu dans le chapitre précédent, la boucle dîtes arithmétique. Avec cette boucle, la partie de code \emph{contrôlée} par celle-ci, s'exécute un nombre de fois précis.
 
 Parfois, on sera intéressé que le programme s'arrête, non pas après un certain nombre de fois, mais plutôt lorsque qu'une certaine condition est remplie. Pour se faire on fait appelle au \emph{boucle logique}.
 
@@ -65,12 +70,16 @@ La boucle s'arrête lorsque la condition est \emph{faux}.
 
 Dans le cas de notre script, c'est lorsque le nombre de monstre passe en-dessus de 0 que la condition devient \emph{fausse}.
 
+\subsection{\`A retenir}
+
+\textbf{Très, très, très important}: il est impératif quà l'intérieur de votre \emph{boucle logique}, il y ait un moyen de rendre la condition de contination fausse. Sinon vous allez vous retrouver face à une boucle infinie. 
+
 \subsection{Stage 3-1}
 
 Reprenez le \textit{bonus stage} du \textit{level 2}\footnote{au besoin le code corrigé de cette exercices ce trouve dans le script \path{bonus\_stage\_2.py}}. Arrangez ce code avec une \emph{boucle logique} à la place de la \emph{boucle arithmétique} pour le héros arrête de bouger dès qu'il est arrivé à destination et non après un nombre d'itération arbitraire.
-Lorsque le héros a atteint sa cible, la variable \codeintext{hero.on\_goal} vaut \codeintext{True}, dans les autres cas elle est égale à \codeintext{False}.
+Lorsque le héros a atteint sa cible, la variable \codeintext{hero.is\_at\_goal} vaut \codeintext{True}, dans les autres cas elle est égale à \codeintext{False}.
 
-\section{les imports}
+\section{imports}
 
 En Python, il est courant de devoir \emph{importer} le contenu de fichier dans d'autre fichier.
 \`A plusieurs reprise, on déjà vu cette instruction dans les scripts que l'on a utilisé:
@@ -82,32 +91,73 @@ import world
 Cette commande, demande à python d'\emph{importer} le contenu du fichier \path{world.py} en vue de l'utiliser plus tard.
 Dans la suite, si l'on veut faire appel au contenu de \codeintext{world}, on doit utilisé son nom suivit d'un "\codeintext{.}"
 
-Par exemple si je veux utiliser la variable \codeintext{SCREEN\_SIZE} dans mon script je vais procéder comme suit:
+Par exemple si je veux utiliser la variable \codeintext{GROUND\_IMAGE\_PATH} dans mon script je vais procéder comme suit:
 
 \begin{lstlisting}
 import world
 
-scree_size = world.SCREEN_SIZE
+scree_size = world.GROUND_IMAGE_PATH
 \end{lstlisting}
 
-On peut aussi n'\emph{importer} qu'une partie d'un module\footnote{C'est le nom que l'on donne au fichier que l'on importe}.
+On peut aussi n'\emph{importer} qu'une partie d'un \emph{module}\footnote{C'est le nom que l'on donne au fichier que l'on importe}.
 
 \begin{lstlisting}
-from world import SCREEN_SIZE
+from world import GROUND_IMAGE_PATH
 \end{lstlisting}
 
-En procédant de cette manière, on n'\emph{importe} que la variable \codeintext{SCREEN\_SIZE}.
-Cela présente l'avantage de ne devoir précédé la variable \codeintext{SCREEN\_SIZE} de \codeintext{world.}, on peut se contenter du nom de la variable seul.
+En procédant de cette manière, on n'\emph{importe} que la variable \codeintext{GROUND\_IMAGE\_PATH}.
+Cela présente l'avantage de ne devoir précédé la variable \codeintext{GROUND\_IMAGE\_PATH} de \codeintext{world.}, on peut se contenter du nom de la variable seul.
 
 \begin{lstlisting}
-from world import SCREEN_SIZE
+from world import GROUND_IMAGE_PATH
 
-screen_size = SCREEN_SIZE
+screen_size = GROUND_IMAGE_PATH
 \end{lstlisting}
 
-Et enfin, on peut \emph{importer} plusieurs composant d'un module sur la même ligne.
-Si je voulais importer \codeintext{SCREEN\_SIZE} et la variable \codeintext{TILE\_SIZE}, je procéderais ainsi:
+Et enfin, on peut \emph{importer} plusieurs composant d'un \emph{module} sur la même ligne.
+Si je voulais importer \codeintext{GROUND\_IMAGE\_PATH} et la variable \codeintext{OBSTACLE\_IMAGE\_PATH}, je procéderais ainsi:
 
 \begin{lstlisting}
-from world import SCREEN_SIZE, TILE_SIZE
+from world import GROUND_IMAGE_PATH, OBSTACLE_IMAGE_PATH
 \end{lstlisting}
+
+\subsection{Stage 3-2}
+Dans le fichier \path{data.py}, se trouve toute les données utilisées pour le jeu. Parmis c'est données se trouve la donnée de la \textit{taille de la fenêtre du jeu} : \codeintext{SCREEN\_SIZE} (c'est un \codeintext{tuple} correspondant à \codeintext{(\textit{largeur},\textit{hauteur})} et la donnée du \textit{facteur de grossissement}: \codeintext{SCALE\_FACTOR}.
+La grandeur réelle de l'écran est calculée en multipliant la \textit{largeur} et la \textit{hauteur} de l'écran par le \textit{facteur de grossissement}.
+\emph{Importer} ces données dans le \codeintext{run\_game} et affichez dans la console la taille réelle de la fenêtre de jeu.
+
+\subsection{N'Import quoi!}
+
+Il n'y a pas que les \emph{modules} que vous avez fait que vous pouvez \emph{importer}, Python est livré avec un série \emph{module} prêt a être utilisé par vos mains avides de coder.
+Pour importer ces \emph{modules}, il n'y a pas de différences que pour vos \emph{modules} personnelles. il suffit juste de connaitre le nom du \emph{module} que vous voulez importer\footnote{La liste des modules disponibles dans Python est leur contenu est disponible sur le site de Python (\url{www.python.org/doc})}. L'un de ses modules qui nous sera très utiles dans le cadre de la réalisation de jeu vidéo, c'est \codeintext{random}.
+
+Pour l'importer donc pas de mystère:
+
+\begin{lstlisting}
+import random
+\end{lstlisting}
+
+\subsection{Stage 3-3}
+Ce module contient la fonction \codeintext{(randint)} cette fonction prend deux arguments qui doivent être de type \codeintext{int}.
+En important cette fonction et uniquement cette fonction (Rappelez-vous, les méthodes d'\emph{import} de \emph{modules} Python ne sont pas différentes de l'\emph{import} de modules personels), essayez de déterminez que fait la fonction (même si le nom du \emph{module} et de la fonction sont de gros indices).
+Vous pouvez utilisez le script \codeintext{run\_game}, ou bien la console Python pour faire ces tests.
+
+\section{La génération de nombre aléatoire}
+
+Vous avez put le constatez, la fonction \codeintext{randint} génère des nombres aléatoires compris entre le premier arguments de la fonction et le deuxième argument\footnote{Pour autant que les arguments soit en ordre croissant, sinon çà génère une erreur.}
+Générer des nombres aléatoires est extrêment partique, car cela permet de simuler le caractère hasardeux d'une situation, un peu à l'image d'une dès.
+
+\subsection{Stage 3-4}
+
+Utiliser la fonction random sur le jeu.
+Simulez un dé à 6 faces:
+\begin{description}
+	\item[1]: le héros tourne à droite
+	\item[2]: le héros toure à gauche
+	\item[3-5]: le héros avance
+	\item[6]: le jeu héro arrête de bouger définitivement
+\end{description}
+
+En plus de cela, à chaque lancer de dé: affichez dans la console le résultat de celui-ci.
+
+
