@@ -7,10 +7,6 @@ import pyglet
 
 from pyglet.gl import *
 
-# B : Attention, importer depuis le bon module!
-# from run_game import game_update
-from solution import game_update
-
 from maze import Maze
 
 GROUND_IMAGE_PATH = r'assets/ground.png'
@@ -25,6 +21,8 @@ TILE_SIZE = (16, 16)
 SCREEN_SIZE = (400, 300)
 SCALE_FACTOR = 2
 ACTION_TIME = 0.1
+
+GAME_UPDATE_FUNCTION = None
 
 class Direction(object):
     north = (0, 1)
@@ -109,7 +107,8 @@ class Hero(cocos.sprite.Sprite):
         self.__append_action(action)
 
     def update(self):
-        game_update(self)
+        if GAME_UPDATE_FUNCTION is not None:
+            GAME_UPDATE_FUNCTION(self)
         self.go()
 
     def go(self):
