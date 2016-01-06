@@ -18,7 +18,7 @@ GOAL = 'goal'
 TILE_SIZE = (16, 16)
 SCREEN_SIZE = (400, 300)
 SCALE_FACTOR = 2
-ACTION_TIME = 2.
+ACTION_TIME = 0.5
 
 
 class Direction(object):
@@ -56,11 +56,12 @@ class Hero(cocos.sprite.Sprite):
         image = self.__images.pop(0)
         self.image = image
 
-    def move(self):
-        if self.dungeon.hero_move(self.sens):
-            move_by = self.sens[0] * TILE_SIZE[0], self.sens[1] * TILE_SIZE[1]
-            action = cocos.actions.MoveBy(move_by, ACTION_TIME)
-            self.__append_action(action)
+    def move(self, nbr=1):
+        for n in range(nbr):
+            if self.dungeon.hero_move(self.sens):
+                move_by = self.sens[0] * TILE_SIZE[0], self.sens[1] * TILE_SIZE[1]
+                action = cocos.actions.MoveBy(move_by, ACTION_TIME)
+                self.__append_action(action)
 
     def turn_right(self):
         if self.sens == Direction.north:
