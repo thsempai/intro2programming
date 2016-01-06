@@ -2,18 +2,236 @@
 
 Savoir commander l'ordinateur est une chose, encore faut-il arriver à lui faire faire des choses intelligentes. Heureusement, tous les languages de programmation proposent une série d'outils qui vont permettre de donner des instructions complexes à la machine.
 
+\section{Comparaison n'est pas raison}
+
+L'un des éléments récurrents en programmation est le besoin d'effectuer des comparaisons, et plus globalement d'évaluer si certains \emph{conditions} sont vérifiées ou pas. Le sujet est vaste, mais tout bon programmeur se doit de savoir écrire les bonnes conditions s'il veut que son code se comporte comme il le veut.
+
+\subsection{Les \codeintext{bool}éens}
+
+Outre manipuler des nombres, des chaînes de caractères et autres listes, il y a un autre type de données omniprésent en Python : les \emph{booléens}.
+
+La définition d'une variable booléenne est une valeur qui peut être soit \emph{vraie}, soit \emph{fausse}. En Python, on représente la valeur vraie par \codeintext{True}, et la valeur fausse par \codeintext{False}.
+
+Comme les booléens sont un type de variables comme les autres, vous avez le droit de manipuler \codeintext{True} et \codeintext{False} comme n'impore quelle autre valeur :
+
+\begin{lstlisting}
+    a = True
+    b = False
+    print(a)
+    print(b)
+\end{lstlisting}
+
+Tout l'intérêt de ce type de variables va résider dans les opérations spécifiques que l'on peut leur appliquer, et qui permettent d'effectuer des choix par rapport à certains éléments du code.
+
+\subsection{Les comparaisons}
+
+Une façon d'obtenir des valeurs booléennes est d'utiliser les opérateurs dit de comparaison. Vous les connaissez probablement pratiquement tous :
+
+\begin{description}
+    \item[\codeintext{<} Plus petit que] Teste si la valeur à gauche de \codeintext{<} est plus petite que celle à droite. 
+    \item[\codeintext{<=} Plus petit ou égal à] Teste si la valeur à gauche de \codeintext{<=} est plus petite OU égale à celle à droite.
+    \item[\codeintext{>} Plus grand que] Teste si la valeur à gauche de \codeintext{>} est plus grande que celle à droite.
+    \item[\codeintext{>=} Plus grand ou égal à] Teste si la valeur à gauche de \codeintext{>=} est plus grande OU égale à celle à droite.
+    \item[\codeintext{==} Egal à] Teste si la valeur à gauche de \codeintext{==} est égale à celle à droite.
+    \item[\codeintext{!=} Différent de] Teste si la valeur à gauche de \codeintext{!=} est différente de celle à droite.
+\end{description}
+
+Rien de bien sorcier, et la comparaison renvoie \codeintext{True} si la condition est remplie, et \codeintext{False} sinon.
+
+A noter, l'opérateur ``égal'' (\codeintext{==}) n'est pas simplement \codeintext{=}, puisque \codeintext{=} est déjà ``pris'' par l'affectation d'une variable.
+
+Voici quelques exemples de comparaisons, avec en commentaire la valeur renvoyée :
+
+\begin{lstlisting}
+    a = 3
+    b = 5
+    c = 3
+
+    a > 5     # False
+    a < b     # True
+    c == a    # True
+    a <= b-2  # True
+    a != c    # False
+    4 >= 1    # False
+\end{lstlisting}
+
+Petite astuce : on peut comparer autre chose que des nombres, bien sûr. Python définit un \emph{ordre} sur beaucoup de types d'objets, par exemple les \emph{string}. \codeintext{``message'' <  ``texte''} renverra \codeintext{True}, car l'ordre est ``lexicographique'' pour le texte (plus ou moins équivalent  à l'ordre alphabétique).
+
+On peut évidemment affecter le résultat d'une comparaison à une variable :
+
+\begin{lstlisting}
+    a = 3
+    b = 5
+
+    condition = a < b
+    print(condition)   # Imprime True
+\end{lstlisting}
+
+Voyons maintenant ce qu'on peut faire de beau avec ces fameux booléens, avant de voir les applications vraiment pratiques !
+
+\subsection{L'algèbre booléenne pour les nuls}
+
+Les comparaisons et les valeurs booléennes, aussi intéressantes qu'elles soient (et elles le sont dans de nombreux cas), ne révèlent leur vraie puissance que lorsqu'elle sont combinées via une série de règles inventées par Mr Boole\footnote{Véridique, un nom pareil, ça ne s'invente pas.}. On appelle ces règles l'algèbre booléenne.
+
+Ce cours n'a pas pour vocation de faire de vous des pros de la logique, mais vous rencontrerez très souvent les opérations suivantes...
+
+\subsubsection{La négation}
+
+L'opération de négation, consiste simplement à inverser une valeur booléenne. C'est probablement l'opération la plus courante, et en Python, on la note \codeintext{not}.
+
+\begin{lstlisting}
+    not True     # == False
+    not False    # == True
+\end{lstlisting}
+
+\subsubsection{La conjonction (ET)}
+
+L'opération de conjonction, consiste à vérifier si deux conditions sont toutes les deux vraies. Egalement un cas très courant, et notée en Python \codeintext{and}. Son comportement est très similaire à ce dont on pourrait s'attendre :
+
+\begin{lstlisting}
+    True and True     # == True
+    True and False    # == False
+    False and True    # == False
+    False and False   # == False
+\end{lstlisting}
+
+En résumé, \codeintext{a and b} ne renvoie \codeintext{True} que si et seulement si \codeintext{a} est vrai, ET \codeintext{b} est également vrai. Dans tous les autres cas, le résultat du \codeintext{and} vaut \codeintext{False}.
+
+\subsubsection{La disjonction (OU)}
+
+L'opération de disjonction est un peu le pendant du ET, et représente un OU. C'est-à-dire, on va vérifier si soit la première condition, soit la seconde, soit les deux, sont vraies. En Python, on la note \codeintext{or}. Son comportement est :
+
+\begin{lstlisting}
+    True or True     # == True
+    True or False    # == True
+    False or True    # == True
+    False or False   # == False
+\end{lstlisting}
+
+En résumé, \codeintext{a or b} renvoie \codeintext{True} que si au moins \codeintext{a} est vrai, OU \codeintext{b} est vrai. Le seul cas où le résultat du \codeintext{or} vaut \codeintext{False} est si les deux conditions sont fausses.
+
+\subsubsection{L'utilité de tout ça...}
+
+Avec ces quelques règles, qui finalement sont assez logiques, on est capable de réaliser des opérations très complexes, qui vont nous permettre de résoudre énormément de cas. Par exemple, on pourrait écrire une condition du style : ``Le héros à moins de la moitié de ses points de vie et il n'a pas de potion, ou il a un allié qui est en train de le soigner.''
+
+Bien entendu en code ça sera un tout petit peu différent visuellement, mais le principe est là.
+
+Mettons en pratique tout ceci...
+
+\section{Prendre des décisions}
+
+Nous voilà enfin arrivé dans le vif du sujet. Pour que le code écrit par un programmeur soit réactif par rapport aux actions de l'utilisateur, ou même qu'il puisse traiter des cas demandant des réponses différentes, il existe un outil véritablement omniprésent dans tous les languages : les instructions de \emph{contrôle de flux}, plus communément appellées par leur petit nom : \codeintext{if}.
+
+\subsection{\codeintext{if}, version simple}
+
+\codeintext{if} en anglais, se traduit par ``si''. De là, on peut deviner le but de cette instruction : faire quelque chose \emph{si} une condition est remplie.
+
+Et c'est exactement ce qu'il se passe.
+
+Voyons un exemple élémentaire :
+
+\begin{lstlisting}
+    a = 3
+    if a < 10:
+        print(str(a) + " est plus petit que 10 !")
+\end{lstlisting}
+
+A votre avis, que se passe-t-il si on change la première ligne par \codeintext{a = 245} ?
+
+Il ne se passe rien. De façon un peu plus précise, l'instruction \codeintext{if} est une instruction de branchement. Si la condition indiquée entre le \codeintext{if} et le \codeintext{:} est remplie (et donc égale à \codeintext{True}), le code indenté\footnote{Nous allons y revenir tout de suite.} qui suit est exécuté, et seulement dans ce cas là.
+
+Comme le \codeintext{if} demande une condition, et donc une valeur booléenne, nous pouvons mettre en pratique ce que nous avons vu dans les sections précédentes.
+
+\begin{lstlisting}
+    a = 3
+    b = 5
+    if a < 10 and b > 3:
+        print("Conditions remplies !")
+\end{lstlisting}
+
+Qu'est-ce qu'il se passe si \codeintext{b} vaut 2 ? Si \codeintext{a} vaut 12 ?
+
+Et qu'en est-il de cet exemple encore plus compliqué ?
+
+\begin{lstlisting}
+    a = 3
+    b = 5
+    if (a < 10 and b > 3) or (a >= b):
+        print("Conditions remplies !")
+\end{lstlisting}
+
+Quid si \codeintext{b} vaut -12 et \codeintext{a} vaut 42512 ?
+
+On voit donc que rapidement, l'utilisation de quelques opérations de comparaison et d'algèbre de Boole permettent de définir des cas déjà assez complexes. Mais on peut encore faire mieux ! Avant de voir ça, cependant, passons quelques minutes à parler d'un sujet important, particulièrement en Python.
+
+\subsection{De l'importance de l'indentation}
+
+L'indentation, ou alignement du code, est capital en Python. En effet, à la différence de la plupart des langages, Python n'utilise pas d'accolades pour délimiter les différents blocs de code. A la place, l'indentation va jouer le rôle de différenciateur.
+
+Pour comprendre, voici un petit script :
+
+\begin{lstlisting}
+    a = 3
+    if a > 10:
+        print("Conditions remplies !")
+        print("a est plus grand que 10 !")
+    print("a vaut " + str(a))
+\end{lstlisting}
+
+Les lignes 3 et 4, qui sont alignées, mais un niveau en plus que le reste des lignes, représente un bloc de code séparé. Si vous lancez le script tel quel, seule la dernière ligne sera imprimée à l'écran. Si vous changez le \codeintext{a} pour qu'il vaille 15, le bloc qui suit le \codeintext{if} sera bien exécuté.
+
+Les problèmes d'indentation sont véritablement une source d'erreur courante. Il faut donc vraiment y payer une attention toute particulière.
+
+\subsection{\codeintext{if}, version \emph{full options}}
+
+Quand on utilise un \emph{si}, on a naturellement envie d'utiliser un \emph{sinon}. Ca tombe bien, Python, comme beaucoup de langages de programmation, vous offre cette possibilité. Pour reprendre un exemple vu plus haut et l'étoffer un petit peu :
+
+\begin{lstlisting}
+    a = 3
+    b = 5
+    if a < 10 and b > 3:
+        print("Conditions remplies !")
+    else:
+        print("Les conditions ne sont pas remplies !")
+\end{lstlisting}
+
+Le \codeintext{else} dans l'exemple ci-dessus représente le \emph{sinon}. Il indique que le bloc de code qui le suit directement doit être exécuté si et seulement si la condition du \codeintext{if} n'est pas remplie.
+
+Notez qu'il s'agit ici d'un choix exclusif : les deux blocs de code ne peuvent en aucun cas être tous les deux exécutés. Soit la condition du \codeintext{if} est remplie, soit elle ne l'est pas, mais on ne peut pas avoir les deux en même temps.
+
+Dans certains cas, vous aurez plus d'un cas à tester. Python offre une dernière option pour effectuer ça, \codeintext{elif} :
+
+\begin{lstlisting}
+    a = 4
+    if a < 3:
+        print("Condition 1 remplie !")
+    elif a < 5:
+        print("Condition 2 remplie !")
+    elif a < 7:
+        print("Condition 3 remplie !")
+    else:
+        print("Les conditions ne sont pas remplies !")
+\end{lstlisting}
+
+Python va évaluer les différentes conditions indiquées dans le \codeintext{if} et \codeintext{elif} les unes après les autres, et exécuter le premier bloc de code pour lequel la condition est vérifiée. Et uniquement celui-là ! Même si les conditions suivantes sont remplies, après avoir exécuter le premier bloc, Python va passer le reste de l'instruction.
+
+Le \codeintext{else} ne sera exécuté que si toutes les conditions sont \codeintext{False}, et uniquement ce cas-là.
+
+Voilà de quoi déjà faire pas mal de choses un peu plus intéressantes. Une fois la notion de choix bien en place, nous pouvons passer à la suite, et apprendre à faire des boucles...
+
 \section{La boucle \texttt{for}, premier acte}
 
 S'il y a bien une chose pour laquelle les ordinateurs sont doués, c'est la répétitions. Contrairement aux humains, un ordinateur ne se fatigue pas, ni ne se lasse des tâches répétitives. Au contraire, la possibilité d'effectuer rapidement des opérations similaires sur un grand nombre d'objets ou de données constitue l'une des plus grande force de l'informatique.
 
 D'ailleurs, au coeur de tout jeu vidéo, on trouve une boucle. En simplifiant, l'ordinateur est pris dans un cycle comme suit :
 
+% T: je pense que lstlisting risque de pas affiché les accentuée (il faut donc ajouter dans le "literate" de lstset (cours.tex) pour obtenir les bons accentués. 
 \begin{lstlisting}
     Tant que le joueur ne quitte pas le jeu:
-        Vérifier si un bouton a été pressé, si oui, calculer la réaction
-        Afficher le jeu après avoir effectué les modifications
+        Vérifier si un bouton a été pressé
+            Si oui, calculer la réaction
+        Afficher le jeu mis à jour
         Recommencer
-    \caption{Test}
 \end{lstlisting}
 
 Les boucles sont donc un élément extrêmement important dans la boite à outils d'un programmeur. Mais avant d'écrire notre première boucle, faisons un petit détour pour apprendre un élément qui nous aidera.
@@ -92,8 +310,17 @@ Bonus : comment faire une séquence qui compte de 10 à 1 ? Une idée ?
 
 Passons sur le titre grammaticalement incorrect de cette section, et intéressons-nous au véritable sujet qui nous intéresse : Comment créer une boucle en Python ?
 
-Il existe plusieurs instructions de boucle en Python, la première que nous allons voir est une boucle dite \emph{itérative}, aussi appellée boucle \texttt{for}. 
+Il existe plusieurs instructions de boucle en Python, la première que nous allons voir est une boucle dite \emph{arithémtique}, aussi appellée boucle \texttt{for}. 
 
-\section{Comparaisons}
+La boucle \codeintext{for} va parcourir une \emph{séquence} d'éléments, comme une liste ou un tuple, et va effectuer le code qu'elle contient pour chaque élément de la séquence. Un exemple vaut mieux qu'un long discours :
 
-\section{Prendre des décisions}
+\begin{lstlisting}
+    for i in range(10):
+        print('Compteur : ' + str(i))
+\end{lstlisting}
+
+Le résultat sera l'impression dans la console des nombres de 0 à 9 (souvenez-vous, Python commence à compter à 0, et va jusqu'au nombre qu'on lui a donné, -1).
+
+Et c'est l'entierté de ce qu'il faut savoir pour utiliser une boucle \codeintext{for} ! Comme le montre l'exemple, la boucle est dirigée par une variable spéciale, ici \codeintext{i}, qui est appelée ``compteur''. On peut l'utiliser, à l'intérieur de la boucle, comme une variable normale.
+
+Il existe un autre type de boucle, sans compteur, mais nous en parlerons plus tard dans le cours.
