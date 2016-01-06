@@ -7,6 +7,7 @@ import pyglet
 
 from pyglet.gl import *
 from run_game import game_update
+from maze import Maze
 
 GROUND_IMAGE_PATH = r'assets/ground.png'
 OBSTACLE_IMAGE_PATH = r'assets/obstacle.png'
@@ -19,7 +20,7 @@ GOAL = 'goal'
 TILE_SIZE = (16, 16)
 SCREEN_SIZE = (400, 300)
 SCALE_FACTOR = 2
-ACTION_TIME = 0.75
+ACTION_TIME = 0.5
 
 
 class Direction(object):
@@ -181,7 +182,6 @@ class Game(cocos.scene.Scene):
 
     def run(self):
         self.set_view(SCREEN_SIZE)
-        # self.schedule_interval(self.update, 1)
         # self.hero.go()
         self.hero.update()
         cocos.director.director.run(self)
@@ -201,6 +201,7 @@ class Dungeon(cocos.tiles.RectMapLayer):
         self.tileset = DungeonTileSet()
 
         self.__build()
+        # self.__build_maze()
         self.__apply_tileset()
 
         self.hero = None
@@ -214,6 +215,28 @@ class Dungeon(cocos.tiles.RectMapLayer):
         self.hero.position = self.__begin_postion()
         self.hero_position = self.dungeon_size[0] - 2, 1
         hero.dungeon = self
+
+    def __build_maze(self):
+        self.__cells = []
+
+        maze = Maze(*self.dungeon_size)
+        self.dungeon_size = (maze.size_x, maze.size_y)
+
+        for x in range(self.dungeon_size[0]):
+            column = []
+            cells_column = []
+            for y in range(self.dungeon_size[1]):
+                print(x,y)
+                if x == 1 and y == self.dungeon_size[1] - 2:
+                    column.append(GOAL)
+                elif maze.cells[x][y] == 1:
+                    column.append(OBSTACLE)
+                else:
+                    column.append(GROUND)
+                cells_column.append(None)
+
+            self.__cells.append(cells_column)
+            self.tiles.append(column)
 
     def __build(self):
         self.__cells = []
