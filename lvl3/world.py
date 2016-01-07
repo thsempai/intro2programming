@@ -6,8 +6,9 @@ import cocos
 import pyglet
 
 from pyglet.gl import *
-
+from run_game import game_update
 from maze import Maze
+from data import TILE_SIZE, SCREEN_SIZE, SCALE_FACTOR, ACTION_TIME
 
 GROUND_IMAGE_PATH = r'assets/ground.png'
 OBSTACLE_IMAGE_PATH = r'assets/obstacle.png'
@@ -17,12 +18,6 @@ GROUND = 'ground'
 OBSTACLE = 'obstacle'
 GOAL = 'goal'
 
-TILE_SIZE = (16, 16)
-SCREEN_SIZE = (400, 300)
-SCALE_FACTOR = 2
-ACTION_TIME = 0.1
-
-GAME_UPDATE_FUNCTION = None
 
 class Direction(object):
     north = (0, 1)
@@ -35,6 +30,8 @@ HERO_IMAGES_PATHS = {
     Direction.south: r'assets/hero_s.png',
     Direction.east: r'assets/hero_e.png',
     Direction.west: r'assets/hero_w.png'}
+
+MONSTER_IMAGE_PATH = r'assets/monster.png'
 
 
 class Hero(cocos.sprite.Sprite):
@@ -107,8 +104,7 @@ class Hero(cocos.sprite.Sprite):
         self.__append_action(action)
 
     def update(self):
-        if GAME_UPDATE_FUNCTION is not None:
-            GAME_UPDATE_FUNCTION(self)
+        game_update(self)
         self.go()
 
     def go(self):
@@ -228,6 +224,7 @@ class Dungeon(cocos.tiles.RectMapLayer):
             column = []
             cells_column = []
             for y in range(self.dungeon_size[1]):
+                print(x, y)
                 if x == 1 and y == self.dungeon_size[1] - 2:
                     column.append(GOAL)
                 elif maze.cells[x][y] == 1:

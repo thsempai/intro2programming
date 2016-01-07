@@ -5,8 +5,7 @@ def main():
     dungeon_size = (10, 10)
     game = world.Game(dungeon_size)
     hero = game.hero
-    world.GAME_UPDATE_FUNCTION = game_update
-    
+
     # Votre code ici :)
 
     game.run()
