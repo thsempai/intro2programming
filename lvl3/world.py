@@ -198,8 +198,8 @@ class Dungeon(cocos.tiles.RectMapLayer):
         self.tiles = []
         self.tileset = DungeonTileSet()
 
-        self.__build()
-        # self.__build_maze()
+        # self.__build()
+        self.__build_maze()
         self.__apply_tileset()
 
         self.hero = None
