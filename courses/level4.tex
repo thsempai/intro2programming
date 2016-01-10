@@ -1,0 +1,158 @@
+\chapter{Level 4}
+
+\section{Les fonctions}
+
+Une \emph{fonction} est un outils qui permet d'abstraire le code afin de garder un maximum de structure et de lisibilité dans le code.
+
+En gros, une \emph{fonction} peut être vue comme un bout de code sur lequel on aurait mis un nom.
+
+Nous avons déjà utilisé plusieurs fonctions : \codeintext{print}, \codeintext{input}, \codeintext{len}, ...
+
+Nous avons même déjà vu sans savoir exactement ce que c'était comment définir une \emph{fonction} dans le code de notre jeu:
+
+
+\begin{lstlisting}
+import world
+
+
+def main():
+    dungeon_size = (10, 10)
+    game = world.Game(dungeon_size)
+    hero = game.hero
+\end{lstlisting}
+
+Dans ce morceau de code la \emph{fonction} se nomme \codeintext{main}.
+
+Pour définir une fonction, il faut simplement écrire \codeintext{def} suivit de parenthèse\footnote{Nous verrons dans la suite du cours que ces parenthèses ne seront pas toujours vide.} et d'un "\codeintext{:}
+Le code de la fonction comme pour les boucles ou la condition, doit être indenté.
+
+Pour appeler une fonction, il suffit d'utiliser son nom, comme suit:
+
+\begin{lstlisting}
+main()
+\end{lstlisting}
+
+Dans ce cas, c'est la fonction \codeintext{main} qui est appelée.
+
+\subsection{Important}
+Pour la claretée de votre code et pour facilité sa relecture, il est très important que le nom de votre fonction soit explicite.
+Ne nommez pas une variable qui simule le lancement d'un dé \codeintext{a} ou même \codeintext{d}, mais plutôt \codeintext{dice} ou \codeintext{dice\_simulation}
+
+\subsection{Stage 4-1}
+
+Dans le jeu du bingo (Stage 3-4) Ajouter une \emph{fonction} \codeintext{bingo} qui affiche "Bingo!" dans la console.
+Dans le code principale du jeu, remplacé la partie qui s'occupe d'écrire "Bingo!" par l'appel de votre fonction
+
+\section{Le retour}
+
+L'une des caractéristique d'une \emph{fonction} c'est qu'elle peut avoir un \emph{retour}.
+Par exemple, le nombre aléatoire donné par la focntion \codeintext{randint} est son \emph{retour}.
+
+Un \emph{retour} est une valeur donnée par une \emph{fonction}. On dit d'ailleurs que la fonction \emph{retourne} une valeur.
+
+Lorsqu'il y a besoin de retourner une valeur on utilise le mot clé \codeintext{return}.
+
+Le \emph{retour} d'une fonction doit bien évidemment être recueillit par le code appelant, sinon il est perdu.
+
+\begin{lstlisting}
+import random
+
+
+def dice_simulation():
+	dice = random.randint(1, 6)
+	return dice
+	
+result = dice()
+print("Résultat du dé: " + result)	
+\end{lstlisting}
+
+\section{Stage 4-2}
+Faite en sorte de bouger dans une \emph{fonction} la partie du code qui demande à l'utilisateur de choisir un chiffre dans une \emph{fonction} et faite en sorte que cette \emph{fonction} \emph{renvoie} le nombre choisis par l'utilisateur.
+
+\section{Paramètres}
+
+Une fonction peut aussi avoir un ou plusieurs \emph{arguments}. Les \emph{arguments} sont des valeurs qui sont transféree du code  appelant à la \emph{fonction} via des variables appellées \emph{paramêtres}
+
+Dans le code suivant:
+
+\begin{lstlisting}
+from random import randint
+
+
+dice = randint(1, 6)
+\end{lstlisting}
+
+1 et 6 sont les \emph{paramêtres} de \codeintext{randint}.
+
+On définit les paramêtres d'une fonction en donnant des nom de variable (qui seront ensuite utilisées dans le code de la fonction.
+
+\begin{lstlisting}
+def double(number):
+	return number * 2
+\end{lstlisting}
+
+Dans cette exemple un peu bateau, \codeintext{number} est l'argument de la \emph{fonction} \codeintext{double}.
+
+\begin{lstlisting}
+def list_multiplication(array, number):
+	clone = []
+	
+	for n in array:
+		clone.append(n * number)
+
+	return clone
+\end{lstlisting}
+
+Dans cette autre exemple, \codeintext{array} et \codeintext{number} sont les arguments de la fonction \codeintext{list\_multiplication}
+
+\subsection{Stage 4-3}
+
+Dans le bingo, faites en sorte de sortir le code qui vérifie le nombre rentré par le joueur dans une \emph{fonction}.
+Le code affichera si le nombre est plus petit ou plus grand, et renverra \codeintext{True} si le joueur à deviner juste et \codeintext{False} dans les autre cas.
+La \emph{fonction} prendra en \emph{paramêtres} le nombre donné par le joueur ainsi que le nombre à deviner.
+
+\section{Valeur par défaut}
+
+Il y a un moyen de donner une \emph{valeur par défaut} à un argument.
+Cette valeur lui sera donné si le code appelant ne le fait pas.
+
+\begin{lstlisting}
+import random
+
+
+def dice_simulation(faces=6):
+	dice = random.randint(1, faces)
+	return dice
+\end{lstlisting}
+
+Dans le script ci-dessus, l'\emph{argument} à une \emph{valeur par défaut} de 6.
+Si le code appelant est:
+\begin{lstlisting}
+result = dice_simulation(10)
+\end{lstlisting}
+
+le \emph{paramêtre} \codeintext{faces} vaut 10, mais si on ne l'avait pas préciser, comme dans le code suivant:
+
+\begin{lstlisting}
+result = dice_simulation()
+\end{lstlisting}
+
+le \emph{paramêtre} \codeintext{faces} vaut 6 dans ce cas là.
+
+Il est possible de mélanger des \emph{arguments} sans \emph{valeur par défaut} et des argument avec \emph{valeur par défaut} dans une fonction, mais il faut impérativement que les \emph{paramêtres} avec \emph{valeur par défaut} soit en dernier dans la liste d'\emph{arguments}
+
+\begin{lstlisting}
+import random
+
+
+def dices_simulation(dice_number, faces=6):
+	result = 0
+	
+	for n in range(dice_number)
+		dice = random.randint(1, faces)
+		result = result + dice
+	return result
+\end{lstlisting}
+Dans le code du bingo, modifier la détermination des bornes du jeu à l'aide d'une \emph{fonction} avec une \emph{valeur par défaut}.
+La première fois, le nombre est choisis de manière normale, mais à chaque fois que le joueur recommence de jouer, la borne maximum est modifiée de manière à valoir \codeintext{born\_max + (7 - tentatives}.
+La toute première fois où elle est appellée, la \emph{fonction} n'aura pas de \emph{paramêtre}, et les autres fois elle aura le nombre de tentatives comme \emph{paramêtre}. 
