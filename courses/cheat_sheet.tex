@@ -1,0 +1,278 @@
+\PassOptionsToPackage{table}{xcolor}
+\documentclass[10pt,a4paper,landscape]{article}
+\usepackage{multicol}
+\usepackage{calc}
+\usepackage{ifthen}
+\usepackage[landscape]{geometry}
+\usepackage{titlesec}
+\usepackage{graphicx}
+\usepackage{ stmaryrd }
+\usepackage{tikz}
+\usetikzlibrary{shadows, calc}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{hyperref}
+
+
+%% config
+\definecolor{deepblue}{rgb}{0,0,0.5}
+
+%\usepackage[table]{xcolor}
+
+% Sublime Text 2 cheat sheet
+
+% This sheet is meant to be compiled with pdflatex.
+
+% This code is based on the LaTeX cheat sheet found here :
+% http://www.stdout.org/~winston/latex/
+% by Winston Chang
+
+% Licensed under Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported License.
+
+% Setting the margins at 1cm everywhere
+\geometry{top=1cm,left=1cm,right=1cm,bottom=1cm} 
+
+% Turn off header and footer
+\pagestyle{empty}
+ 
+\makeatletter
+
+\newcommand{\vcenteredinclude}[2]{\begingroup
+\setbox0=\hbox{\includegraphics[#2]{#1}}%
+\parbox{\wd0}{\box0}\endgroup}
+
+\newcommand*\keystroke[1]{%
+  \tikz[baseline=(key.base)]
+    \node[%
+      draw,
+      fill=white,
+      drop shadow={shadow xshift=0.25ex,shadow yshift=-0.25ex,fill=black,opacity=0.75},
+      rectangle,
+      rounded corners=2pt,
+      inner sep=1pt,
+      line width=0.5pt,
+      font=\scriptsize\sffamily
+    ](key) {~#1~\strut}
+  ;
+}
+
+% Don't print section numbers
+\setcounter{secnumdepth}{0}
+
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0pt plus 0.5ex}
+
+\renewcommand{\familydefault}{\sfdefault}
+
+\titleformat{\section}[block]%              
+    {\tikz[overlay] \shade[left color=gray!10,right color=gray] (0,-1ex) rectangle (\linewidth,1.5em); \Large}%    
+    {\thesection}%                   
+    {1em}%
+    {}
+
+\titleformat{\subsection}[block]%              
+    {\large}%    
+    {\thesubsection}%                   
+    {1em}%
+    {}
+
+\graphicspath{{images/}}
+\lstset{
+	literate=
+  {á}{{\'a}}1 {é}{{\'e}}1 {í}{{\'i}}1 {ó}{{\'o}}1 {ú}{{\'u}}1
+  {Á}{{\'A}}1 {É}{{\'E}}1 {Í}{{\'I}}1 {Ó}{{\'O}}1 {Ú}{{\'U}}1
+  {à}{{\`a}}1 {è}{{\`e}}1 {ì}{{\`i}}1 {ò}{{\`o}}1 {ù}{{\`u}}1
+  {À}{{\`A}}1 {È}{{\'E}}1 {Ì}{{\`I}}1 {Ò}{{\`O}}1 {Ù}{{\`U}}1
+  {ä}{{\"a}}1 {ë}{{\"e}}1 {ï}{{\"i}}1 {ö}{{\"o}}1 {ü}{{\"u}}1
+  {Ä}{{\"A}}1 {Ë}{{\"E}}1 {Ï}{{\"I}}1 {Ö}{{\"O}}1 {Ü}{{\"U}}1
+  {â}{{\^a}}1 {ê}{{\^e}}1 {î}{{\^i}}1 {ô}{{\^o}}1 {û}{{\^u}}1
+  {Â}{{\^A}}1 {Ê}{{\^E}}1 {Î}{{\^I}}1 {Ô}{{\^O}}1 {Û}{{\^U}}1
+  {œ}{{\oe}}1 {Œ}{{\OE}}1 {æ}{{\ae}}1 {Æ}{{\AE}}1 {ß}{{\ss}}1
+  {ű}{{\H{u}}}1 {Ű}{{\H{U}}}1 {ő}{{\H{o}}}1 {Ő}{{\H{O}}}1
+  {ç}{{\c c}}1 {Ç}{{\c C}}1 {ø}{{\o}}1 {å}{{\r a}}1 {Å}{{\r A}}1
+  {€}{{\EUR}}1 {£}{{\pounds}}1,
+    language={Python},
+    basicstyle=\ttfamily\small, 
+    tabsize=4,
+    keywordstyle=\bold,
+    commentstyle=\color{gray},
+    otherkeywords={self},
+	keywordstyle=\ttfamily\small\color{deepblue},
+    showtabs=false,
+    showspaces=false,
+    showstringspaces=false
+}
+% -----------------------------------------------------------------------
+
+
+
+\begin{document}
+
+%\renewcommand{\familydefault}{\sfdefault}
+
+\newcommand{\ret}{\keystroke{$\hookleftarrow$}}
+\newcommand{\shift}{\keystroke{$\Uparrow~$}}
+\newcommand{\alt}{\keystroke{Alt}}
+\newcommand{\up}{\keystroke{$\uparrow$}}
+\newcommand{\down}{\keystroke{$\downarrow$}}
+\newcommand{\bkspc}{\keystroke{$\longmapsfrom$}}
+\newcommand{\ctrl}[1]{\texttt{\keystroke{Ctrl}#1}}
+\newcommand{\codeintext}[1]{\texttt{#1}}
+\raggedright
+
+
+
+\begin{multicols}{2}
+
+\rowcolors{1}{gray!20}{white}
+\begin{LARGE}
+
+Cheat sheet pour Python 3.
+\end{LARGE}
+
+
+\section{Types de variables}
+\begin{tabular}{p{3cm}p{4cm}p{\linewidth - 8.25cm}}
+\codeintext{int} & Entier & 1 2 3 4 42 \\
+\codeintext{float} & R\'eel & 1.2 3.4 5. 42.0 \\
+\codeintext{str} & Cha\^ine de caract\`eres & "Texte" 'autre texte'\\
+\codeintext{bool} & Bool\'een & True False \\
+\codeintext{tuple} & N-uple & (1, 2) (1, 'a', 1.2)\\
+\codeintext{list} & Liste & [1, 2, 5] [1, 5, "e"]\\
+\end{tabular}
+
+\section{Op\'erateurs math\'ematiques}
+\begin{tabular}{p{3cm}p{4cm}p{\linewidth - 8.25cm}}
+\codeintext{+} & Addition & 1 + 2\\
+\codeintext{+} & Concat\'enation & "Hello" + "World"\\
+\codeintext{-} & Soustraction & 3 - 4\\
+\codeintext{*} & Multiplication & 5 * 6\\
+\codeintext{*} & Multiplication de \codeintext{str} & "6" * 3\\
+\codeintext{/} & Division & 7 / 8\\
+\codeintext{//} & Division enti\`ere & 9 / 10\\
+\end{tabular}
+
+\section{Opérateurs de comparaison}
+\begin{tabular}{p{3cm}p{4cm}p{\linewidth - 8.25cm}}
+\codeintext{==} & \'Egal & 1 == 2\\
+\codeintext{!=} & Diff\'erent & 3 != 4\\
+\codeintext{<} & Plus petit & 5 < 6\\
+\codeintext{<=} & Plus petit ou \'egal & 7 <= 8\\
+\codeintext{>} & Plus grand & 9 > 10\\
+\codeintext{>=} & Plus grand ou \'egal & 11 >= 12\\
+\codeintext{in} & Est dedans \'egal & 7 in ([1, 2, 3])\\
+\end{tabular}
+
+
+\section{Fonctions Python}
+\begin{tabular}{p{3cm}p{4cm}p{\linewidth - 8.25cm}}
+\codeintext{print} & Affiche un texte dans la console & \codeintext{print("Hello!")}\\
+\codeintext{input} & Renvoie la valeur entr\'ee par l'utilisateur sous forme de \codeintext{str}& \codeintext{name = input("Name: ")}\\
+\codeintext{len} & Renvoie la longueur d'une \codeintext{list}, d'un \codeintext{tuple} ou d'une \codeintext{str} pass\'e en param\^etre.  & \codeintext{len{[1, 2, 3]}}\\
+\end{tabular}
+
+\section{M\'ethodes de \codeintext{list}}
+\begin{tabular}{p{3cm}p{4cm}p{\linewidth - 8.25cm}}
+\codeintext{append} & Ajoute une valeur en fin de \codeintext{list}. & \codeintext{ma\_list.append(3)}\\
+\codeintext{insert} & Ins\`ere une valeur à l'index pass\'e en param\^etre. \textit{insert(index, valeur)} & \codeintext{ma\_list.insert(0, 'test')}\\
+\codeintext{remove} & Retire la premi\`ere occurance de la valeur pass\'ee en param\^etre. & \codeintext{ma\_list.remove('t')}\\
+\codeintext{pop} & Retire la valeur à l'index pass\'e en param\^etre. Et renvoie cette valeur. & \codeintext{first = ma\_list.pop(0)}\\
+\codeintext{sort} & Trie la \codeintext{list} par ordre croissant. & \codeintext{ma\_list.sort()}\\
+\codeintext{reverse} & Inverse le contenu de la \codeintext{list}. & \codeintext{ma\_list.reverse()}\\
+\end{tabular}
+
+\section{Random}
+\begin{tabular}{p{3cm}p{4cm}p{\linewidth - 8.25cm}}
+\codeintext{randint} & Renvoie un nombre al\'eatoire compris entre les deux \codeintext{int} pass\'es en param\^etre. & \codeintext{bingo = randint(1, 50)} 
+\end{tabular}
+
+\section{Import}
+
+Pour importer un module:
+\begin{lstlisting}
+import <nom du module>
+\end{lstlisting}
+
+Pour importer une partie du module:
+\begin{lstlisting}
+from <nom du module> import <partie du module>
+\end{lstlisting}
+
+Exemple:
+
+\begin{lstlisting}
+import random
+from math import sin
+\end{lstlisting}
+
+\section{Boucle arithm\'etique}
+
+\begin{lstlisting}
+for <variable> in <list, str ou range()>:
+	<code contrôlé par la boucle>
+\end{lstlisting}
+
+
+Exemple:
+\begin{lstlisting}
+number = 2
+ma_list = []
+
+for n in range(3):
+	number = number + number
+	lma_listappend(a)
+	
+for value in ma_list:
+	print(value)
+\end{lstlisting}
+
+\section{Condition}
+
+\begin{lstlisting}
+if <condition>:
+	<code contrôlé par la condition>
+elif <autre condition>:
+	<code contrôlé par l'autre condition>
+else:
+	<code contrôlé éxécuté si les autres coditions n'ont pas été remplies>	
+\end{lstlisting}
+
+Il peut y avoir autant de \codeintext{elif} que désiré, par contre il ne peut y avoir qu'un \codeintext{else} qui est toujours mis à la fin du bloc de condition.
+
+Exemple:
+
+\begin{lstlisting}
+import random
+
+response = randint(1, 6)
+test = int(input("tentative: ")
+if response == tentative:
+	print("Well done!")
+elif response == 42:
+	print("Cà c'est LA REPONSE")
+else:
+	print("Dommage")
+\end{lstlisting}
+
+
+\section{Boucle logique}
+
+\begin{lstlisting}
+while <condition>:
+	<code contrôlé par la boucle>
+\end{lstlisting}
+
+
+{\normalsize exemple:}
+\begin{lstlisting}
+result = []
+ 
+while len(result) < 10:
+	response = input("Donne une valeur: " )
+	if response not in result:	
+		result.append(response)
+\end{lstlisting}
+
+\end{multicols}
+\end{document}
