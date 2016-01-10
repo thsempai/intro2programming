@@ -132,20 +132,20 @@ Cheat sheet pour Python 3.
 \end{LARGE}
 
 
-\section{Type de variables}
+\section{Types de variables}
 \begin{tabular}{p{3cm}p{4cm}p{\linewidth - 8.25cm}}
 \codeintext{int} & Entier & 1 2 3 4 42 \\
 \codeintext{float} & R\'eel & 1.2 3.4 5. 42.0 \\
 \codeintext{str} & Cha\^ine de caract\`eres & "Texte" 'autre texte'\\
-\codeintext{bool} & Bool\'en & True False \\
-\codeintext{tuple} & Nuple & (1, 2) (1, 'a', 1.2)\\
-\codeintext{list} & List & [1, 2, 5] [1, 5, "e"]\\
+\codeintext{bool} & Bool\'een & True False \\
+\codeintext{tuple} & N-uple & (1, 2) (1, 'a', 1.2)\\
+\codeintext{list} & Liste & [1, 2, 5] [1, 5, "e"]\\
 \end{tabular}
 
-\section{Opérateur math\'ematique}
+\section{Op\'erateurs math\'ematiques}
 \begin{tabular}{p{3cm}p{4cm}p{\linewidth - 8.25cm}}
 \codeintext{+} & Addition & 1 + 2\\
-\codeintext{+} & Concaténation & "Hello" + "World"\\
+\codeintext{+} & Concat\'enation & "Hello" + "World"\\
 \codeintext{-} & Soustraction & 3 - 4\\
 \codeintext{*} & Multiplication & 5 * 6\\
 \codeintext{*} & Multiplication de \codeintext{str} & "6" * 3\\
@@ -153,7 +153,7 @@ Cheat sheet pour Python 3.
 \codeintext{//} & Division enti\`ere & 9 / 10\\
 \end{tabular}
 
-\section{Opérateur de comparaison}
+\section{Opérateurs de comparaison}
 \begin{tabular}{p{3cm}p{4cm}p{\linewidth - 8.25cm}}
 \codeintext{==} & \'Egal & 1 == 2\\
 \codeintext{!=} & Diff\'erent & 3 != 4\\
@@ -168,14 +168,14 @@ Cheat sheet pour Python 3.
 \section{Fonctions Python}
 \begin{tabular}{p{3cm}p{4cm}p{\linewidth - 8.25cm}}
 \codeintext{print} & Affiche un texte dans la console & \codeintext{print("Hello!")}\\
-\codeintext{input} & Renvoie la valeur entr\'ee par utilisateur l'utilisateur sous forme de \codeintext{str}& \codeintext{name = input("Name: ")}\\
+\codeintext{input} & Renvoie la valeur entr\'ee par l'utilisateur sous forme de \codeintext{str}& \codeintext{name = input("Name: ")}\\
 \codeintext{len} & Renvoie la longueur d'une \codeintext{list}, d'un \codeintext{tuple} ou d'une \codeintext{str} pass\'e en param\^etre.  & \codeintext{len{[1, 2, 3]}}\\
 \end{tabular}
 
-\section{M\'ethode de \codeintext{list}}
+\section{M\'ethodes de \codeintext{list}}
 \begin{tabular}{p{3cm}p{4cm}p{\linewidth - 8.25cm}}
 \codeintext{append} & Ajoute une valeur en fin de \codeintext{list}. & \codeintext{ma\_list.append(3)}\\
-\codeintext{insert} & Insert une valeur à l'index pass\'e en param\^etre. \textit{insert(index, valeur)} & \codeintext{ma\_list.insert(0, 'test')}\\
+\codeintext{insert} & Ins\`ere une valeur à l'index pass\'e en param\^etre. \textit{insert(index, valeur)} & \codeintext{ma\_list.insert(0, 'test')}\\
 \codeintext{remove} & Retire la premi\`ere occurance de la valeur pass\'ee en param\^etre. & \codeintext{ma\_list.remove('t')}\\
 \codeintext{pop} & Retire la valeur à l'index pass\'e en param\^etre. Et renvoie cette valeur. & \codeintext{first = ma\_list.pop(0)}\\
 \codeintext{sort} & Trie la \codeintext{list} par ordre croissant. & \codeintext{ma\_list.sort()}\\
@@ -235,7 +235,7 @@ if <condition>:
 elif <autre condition>:
 	<code contrôlé par l'autre condition>
 else:
-	<code controlé exécuté si les autres coditions n'ont pas été remplie>	
+	<code contrôlé éxécuté si les autres coditions n'ont pas été remplies>	
 \end{lstlisting}
 
 Il peut y avoir autant de \codeintext{elif} que désiré, par contre il ne peut y avoir qu'un \codeintext{else} qui est toujours mis à la fin du bloc de condition.
@@ -269,7 +269,7 @@ while <condition>:
 result = []
  
 while len(result) < 10:
-	response = input("Donne une valeur:" )
+	response = input("Donne une valeur: " )
 	if response not in result:	
 		result.append(response)
 \end{lstlisting}
