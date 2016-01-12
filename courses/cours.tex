@@ -8,6 +8,7 @@
 \usepackage{graphicx}
 \usepackage{parskip}
 \usepackage{xcolor}
+\usepackage{hyperref}
 
 
 %% config
@@ -45,7 +46,7 @@
 \renewcommand{\labelitemi}{∙}
 %%macro
 
-\newcommand{\path}[1]{\texttt{#1}}
+\renewcommand{\path}[1]{\texttt{#1}}
 
 \newcommand{\codeintext}[1]{\texttt{#1}}
 
@@ -57,8 +58,10 @@
 \date{Année 2016}
 
 \maketitle
-%% \tableofcontents
+\tableofcontents
 
 \input{level1}
 \input{level2}
+\input{level3}
+\input{level4}
 \end{document}

@@ -6,6 +6,9 @@ import cocos
 import pyglet
 
 from pyglet.gl import *
+from run_game import game_update
+from maze import Maze
+from data import TILE_SIZE, SCREEN_SIZE, SCALE_FACTOR, ACTION_TIME
 
 GROUND_IMAGE_PATH = r'assets/ground.png'
 OBSTACLE_IMAGE_PATH = r'assets/obstacle.png'
@@ -13,12 +16,10 @@ GOAL_IMAGE_PATH = r'assets/goal.png'
 
 GROUND = 'ground'
 OBSTACLE = 'obstacle'
+MONSTER = 'monster'
 GOAL = 'goal'
 
-TILE_SIZE = (16, 16)
-SCREEN_SIZE = (400, 300)
-SCALE_FACTOR = 2
-ACTION_TIME = 0.5
+MONSTER_IDLE = 0.95
 
 
 class Direction(object):
@@ -34,6 +35,81 @@ HERO_IMAGES_PATHS = {
     Direction.west: r'assets/hero_w.png'}
 
 
+class Monster(cocos.sprite.Sprite):
+
+    def __init__(self, image_path):
+        pyglet.image.load(image_path)
+        super().__init__(
+            pyglet.image.load(image_path), (0, 0), anchor=(TILE_SIZE[0]/2, -TILE_SIZE[1] / 3))
+        self.dungeon = None
+        self.__action = None
+        self.__actions = []
+        self.__current_action = None
+        self.position = (0, 0)
+        self.dungeon_position = (0, 0)
+
+        self.new_action = None
+
+    def __move(self, move):
+        new_position = self.dungeon_position[0] + move[0], self.dungeon_position[1] + move[1]
+        if self.dungeon.is_tile_free_monster(new_position):
+            if new_position != self.dungeon.hero_position:
+                move_by = TILE_SIZE[0] * move[0], TILE_SIZE[1] * move[1]
+                action = cocos.actions.MoveBy(move_by, ACTION_TIME)
+                self.new_action = action
+                self.dungeon_position = \
+                    new_position
+                self.dungeon.update_monster_position()
+
+    def get_free_direction(self):
+        directions = [Direction.north, Direction.south, Direction.west, Direction.east]
+        free = []
+
+        for direction in directions:
+            position = \
+                self.dungeon_position[0] + direction[0], self.dungeon_position[1] + direction[0]
+            if self.dungeon.is_tile_free_monster(position):
+                if position != self.dungeon.hero_position:
+                    free.append(direction)
+        return free
+
+    def move_in_direction(self, direction):
+        self.__move(direction)
+
+    def up(self):
+        self.__move(Direction.north)
+
+    def down(self):
+        self.__move(Direction.south)
+
+    def left(self):
+        self.__move(Direction.west)
+
+    def right(self):
+        self.__move(Direction.east)
+
+    def append_action(self, action):
+        if self.__action:
+            self.__action = self.__action + action
+        else:
+            self.__action = action
+
+    def idle(self):
+        action = cocos.actions.interval_actions.ScaleTo(MONSTER_IDLE, ACTION_TIME/2)
+        action = action + cocos.actions.interval_actions.ScaleTo(1., ACTION_TIME/2)
+        self.append_action(action)
+
+    def go(self):
+        if self.__action:
+            action = cocos.actions.instant_actions.CallFunc(self.update)
+            self.append_action(action)
+            self.do(self.__action)
+            self.__action = None
+
+    def update(self):
+        self.go()
+
+
 class Hero(cocos.sprite.Sprite):
 
     def __init__(self):
@@ -43,6 +119,8 @@ class Hero(cocos.sprite.Sprite):
         self.dungeon = None
         self.sens = Direction.north
         self.__action = None
+        self.__actions = []
+        self.__current_action = None
 
         self.__images = []
 
@@ -56,12 +134,19 @@ class Hero(cocos.sprite.Sprite):
         image = self.__images.pop(0)
         self.image = image
 
-    def move(self, nbr=1):
-        for n in range(nbr):
-            if self.dungeon.hero_move(self.sens):
-                move_by = self.sens[0] * TILE_SIZE[0], self.sens[1] * TILE_SIZE[1]
-                action = cocos.actions.MoveBy(move_by, ACTION_TIME)
-                self.__append_action(action)
+    def is_tile_free(self):
+        return self.dungeon.is_tile_free(self.sens)
+
+    def is_at_goal(self):
+        return self.dungeon.is_at_goal()
+
+    def move(self):
+        if self.dungeon.hero_move(self.sens):
+            move_by = self.sens[0] * TILE_SIZE[0], self.sens[1] * TILE_SIZE[1]
+            action = cocos.actions.MoveBy(move_by, ACTION_TIME)
+            action = action + cocos.actions.MoveBy([0, 0], 0.5 * ACTION_TIME)
+            self.__append_action(action)
+        self.dungeon.monsters_moves()
 
     def turn_right(self):
         if self.sens == Direction.north:
@@ -76,6 +161,7 @@ class Hero(cocos.sprite.Sprite):
         image = pyglet.image.load(HERO_IMAGES_PATHS[self.sens])
         self.__images.append(image)
         action = cocos.actions.instant_actions.CallFunc(self.__change_image)
+        action = action + cocos.actions.MoveBy([0, 0], 0.5 * ACTION_TIME)
         self.__append_action(action)
 
     def turn_left(self):
@@ -91,11 +177,19 @@ class Hero(cocos.sprite.Sprite):
         image = pyglet.image.load(HERO_IMAGES_PATHS[self.sens])
         self.__images.append(image)
         action = cocos.actions.instant_actions.CallFunc(self.__change_image)
+        action = action + cocos.actions.MoveBy([0, 0], 0.5 * ACTION_TIME)
         self.__append_action(action)
+
+    def update(self):
+        game_update(self, self.dungeon.monsters)
+        self.go()
 
     def go(self):
         if self.__action:
+            action = cocos.actions.instant_actions.CallFunc(self.update)
+            self.__append_action(action)
             self.do(self.__action)
+            self.__action = None
 
 
 class DungeonTileSet(cocos.tiles.TileSet):
@@ -115,8 +209,8 @@ class DungeonTileSet(cocos.tiles.TileSet):
         glTexParameteri(goal_image.texture.target, GL_TEXTURE_MAG_FILTER, GL_NEAREST)
         glTexParameteri(goal_image.texture.target, GL_TEXTURE_MIN_FILTER, GL_NEAREST)
 
-        ground_properties = {'obstacle': False, 'goal': True}
-        obstacle_properties = {'obstacle': True, 'goal': True}
+        ground_properties = {'obstacle': False, 'goal': False}
+        obstacle_properties = {'obstacle': True, 'goal': False}
         goal_properties = {'obstacle': False, 'goal': True}
 
         self.add(ground_properties, ground_image, GROUND)
@@ -144,6 +238,10 @@ class Game(cocos.scene.Scene):
         self.character_layer.add(self.hero)
         self.dungeon.add_hero(self.hero)
 
+    def add_monster(self, monster, position):
+        self.character_layer.add(monster)
+        self.dungeon.add_monster(monster, position)
+
     def draw(self, *args, **kwargs):
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST)
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST)
@@ -163,7 +261,10 @@ class Game(cocos.scene.Scene):
 
     def run(self):
         self.set_view(SCREEN_SIZE)
-        self.hero.go()
+        # self.hero.go()
+        self.hero.update()
+        for monster in self.dungeon.monsters:
+            monster.update()
         cocos.director.director.run(self)
 
 
@@ -177,12 +278,36 @@ class Dungeon(cocos.tiles.RectMapLayer):
         self.tileset = DungeonTileSet()
 
         self.__build()
+        # self.__build_maze()
         self.__apply_tileset()
 
         self.hero = None
         self.hero_position = None
+        self.monsters = []
+        self.monsters_position = []
 
         super(Dungeon, self).__init__('dungeon', TILE_SIZE[0], TILE_SIZE[1], self.__cells)
+
+    def update_monster_position(self):
+        self.monsters_position = []
+        for monster in self.monsters:
+            self.monsters_position.append(monster.dungeon_position)
+
+    def monsters_moves(self):
+        for monster in self.monsters:
+            if monster.new_action:
+                monster.append_action(monster.new_action)
+                monster.new_action = None
+            else:
+                monster.idle()
+            monster.go()
+
+    def add_monster(self, monster, position):
+        self.monsters_position.append(position)
+        monster.dungeon_position = position
+        monster.position = position[0] * TILE_SIZE[0] + TILE_SIZE[0]/2, position[1] * TILE_SIZE[1]
+        self.monsters .append(monster)
+        monster.dungeon = self
 
     def add_hero(self, hero):
         self.hero = hero
@@ -190,6 +315,28 @@ class Dungeon(cocos.tiles.RectMapLayer):
         self.hero.position = self.__begin_postion()
         self.hero_position = self.dungeon_size[0] - 2, 1
         hero.dungeon = self
+
+    def __build_maze(self):
+        self.__cells = []
+
+        maze = Maze(*self.dungeon_size)
+        self.dungeon_size = (maze.size_x, maze.size_y)
+
+        for x in range(self.dungeon_size[0]):
+            column = []
+            cells_column = []
+            for y in range(self.dungeon_size[1]):
+                print(x, y)
+                if x == 1 and y == self.dungeon_size[1] - 2:
+                    column.append(GOAL)
+                elif maze.cells[x][y] == 1:
+                    column.append(OBSTACLE)
+                else:
+                    column.append(GROUND)
+                cells_column.append(None)
+
+            self.__cells.append(cells_column)
+            self.tiles.append(column)
 
     def __build(self):
         self.__cells = []
@@ -223,6 +370,12 @@ class Dungeon(cocos.tiles.RectMapLayer):
         x, y = self.dungeon_size[0] - 2, 1
         return x * TILE_SIZE[0], y * TILE_SIZE[1]
 
+    def __monster_in_position(self, position):
+
+        if position in self.monsters_position:
+            return True
+        return False
+
     def __tile_properties(self, position):
         x, y = position
         return self.tileset[self.tiles[x][y]].properties
@@ -240,22 +393,33 @@ class Dungeon(cocos.tiles.RectMapLayer):
         new_position = self.hero_position[0] + move[0], self.hero_position[1] + move[1]
         if self.__tile_properties(new_position)[OBSTACLE]:
             return False
-
+        elif self.__monster_in_position(new_position):
+            return False
         else:
             self.hero_position = new_position
             return True
 
+    def is_tile_free(self, move):
+        new_position = self.hero_position[0] + move[0], self.hero_position[1] + move[1]
 
-if __name__ == '__main__':
-    # director init takes the same arguments as pyglet.window
+        if self.__tile_properties(new_position)[OBSTACLE]:
+            return False
+        elif self.__monster_in_position(new_position):
+            return False
+        else:
+            return True
 
-    dungeon_size = (10, 10)
-    game = Game(dungeon_size)
-    game.hero.move()
-    game.hero.turn_left()
-    game.hero.move()
-    game.hero.move()
-    game.hero.move()
-    game.hero.turn_right()
-    game.hero.move()
-    game.run()
+    def is_tile_free_monster(self, position):
+
+        if self.__tile_properties(position)[OBSTACLE]:
+            return False
+        elif self.__monster_in_position(position):
+            return False
+        else:
+            return True
+
+    def is_at_goal(self):
+        if self.__tile_properties(self.hero_position)[GOAL]:
+            return True
+        else:
+            return False
