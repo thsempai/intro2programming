@@ -393,13 +393,15 @@ class Dungeon(cocos.tiles.RectMapLayer):
         new_position = self.hero_position[0] + move[0], self.hero_position[1] + move[1]
         if self.__tile_properties(new_position)[OBSTACLE]:
             return False
-
+        elif self.__monster_in_position(new_position):
+            return False
         else:
             self.hero_position = new_position
             return True
 
     def is_tile_free(self, move):
         new_position = self.hero_position[0] + move[0], self.hero_position[1] + move[1]
+
         if self.__tile_properties(new_position)[OBSTACLE]:
             return False
         elif self.__monster_in_position(new_position):
@@ -408,6 +410,7 @@ class Dungeon(cocos.tiles.RectMapLayer):
             return True
 
     def is_tile_free_monster(self, position):
+
         if self.__tile_properties(position)[OBSTACLE]:
             return False
         elif self.__monster_in_position(position):

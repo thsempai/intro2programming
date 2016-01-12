@@ -8,7 +8,7 @@ def main():
     game = world.Game(dungeon_size)
 
     monster = world.Monster(MONSTER_IMAGE_PATH)
-    game.add_monster(monster, (1,2))
+    game.add_monster(monster, (1, 2))
 
     hero = game.hero
 
