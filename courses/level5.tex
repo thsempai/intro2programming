@@ -14,7 +14,7 @@ Il est difficile d'entrer vraiment dans les détails techniques de la façon don
 
 \subsection{Mon premier évènement}
 
-Une fois de plus, une fonction a été ajoutée dans \codeintext{run_game.py} pour prendre en charge la gestion du clavier.
+Une fois de plus, une fonction a été ajoutée dans \codeintext{run\_game.py} pour prendre en charge la gestion du clavier.
 
 Cette fonction se présente comme suit :
 
@@ -23,11 +23,11 @@ def on_key_press(key, modifiers, hero):
     pass
 \end{lstlisting}
 
-La fonction propose 3 arguments : \codeintext{key_pressed}, \codeintext{modifiers} et \codeintext{hero}.
+La fonction propose 3 arguments : \codeintext{key\_pressed}, \codeintext{modifiers} et \codeintext{hero}.
 
 \begin{description}
-\item[\codeintext{key_pressed}] est la touche du clavier qui a été pressée. Nous allons voir dans la section suivante comment l'utiliser.
-\item[\codeintext{modifiers}] va nous permettre si une touche \emph{spéciale} a été pressée en même temps que \codeintext{key_pressed}. Par exemple Shift, Ctrl ou Alt.
+\item[\codeintext{key\_pressed}] est la touche du clavier qui a été pressée. Nous allons voir dans la section suivante comment l'utiliser.
+\item[\codeintext{modifiers}] va nous permettre si une touche \emph{spéciale} a été pressée en même temps que \codeintext{key\_pressed}. Par exemple Shift, Ctrl ou Alt.
 \item[\codeintext{hero}] est la même variable \codeintext{hero} que vous avez utilisée lors des chapitres précédents. Rien de bien nouveau ici.
 \end{description}
 
@@ -41,7 +41,7 @@ Une fois que vous avez vu comment cela fonctionnait, il est temps de faire quelq
 
 \subsection{Un vrai jeu vidéo !}
 
-Comme vous avez pu l'expérimenter, nous avons pu voir que notre fonction \codeintext{on_key_pressed()} permet de traiter toutes sortes de touches, et pas seulement celles du clavier. Il en suit donc qu'il pourrait être intéressant d'utiliser ça pour assigner des touches aux différents mouvements du personnage.
+Comme vous avez pu l'expérimenter, nous avons pu voir que notre fonction \codeintext{on\_key\_pressed()} permet de traiter toutes sortes de touches, et pas seulement celles du clavier. Il en suit donc qu'il pourrait être intéressant d'utiliser ça pour assigner des touches aux différents mouvements du personnage.
 
 Mais pour arriver à ça, il vous faut une façon de savoir détecter, dans le code, quelle est la touche pressée. Heureusement, le module \codeintext{key} contient une liste de constante que vous pouvez utiliser.
 
@@ -55,11 +55,11 @@ En guise de bonus, comment faire si on voulait permettre au jeu d'accepter 2 typ
 
 Cette section concerne une partie un petit peu plus avancée, en guise de bonus pour celles qui voudraient approfondir un peu plus.
 
-Nous avons jusqu'ici ignoré l'argument \codeintext{modifiers} de la fonction \codeintext{on_key_pressed()}.
+Nous avons jusqu'ici ignoré l'argument \codeintext{modifiers} de la fonction \codeintext{on\_key\_pressed()}.
 
 Pour l'utiliser, la page de documentation citée plus haut vous donne l'exemple suivant, où la condition est \codeintext{True} si la touche Shift est enfoncée:
 
-\beging{lstlisting}
+\begin{lstlisting}
 if modifiers & MOD_SHIFT:
     pass
 \end{lstlisting}
