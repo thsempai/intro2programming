@@ -1,5 +1,5 @@
 import world
-from pyglet.window import key as kb
+from pyglet.window import key
 
 MONSTER_IMAGE_PATH = r'assets/monster.png'
 
@@ -24,13 +24,9 @@ def game_update(hero, monsters):
         monster.right()
 
 
-def on_key_press(key, modifiers, hero):
-    if key == kb.UP:
-        hero.move()
-    elif key == kb.LEFT:
-        hero.turn_left()
-    elif key == kb.RIGHT:
-        hero.turn_right()
+def on_key_press(key_pressed, modifiers, hero):
+    pass
+
 
 if __name__ == '__main__':
     main()

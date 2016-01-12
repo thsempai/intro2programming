@@ -152,7 +152,6 @@ class Hero(cocos.sprite.Sprite):
         return self.dungeon.is_at_goal()
 
     def move(self):
-        print("In hero.move()")
         if self.dungeon.hero_move(self.sens):
             action = self.__moves[self.sens]
             self.__append_action(action)
@@ -194,9 +193,8 @@ class Hero(cocos.sprite.Sprite):
         self.__append_action(action)
 
     def go(self):
-        print("  In hero.go()")
         if self.__action:
-            print(type(self.__action))
+            self.dungeon.accept_key = False
             self.do(self.__action)
             self.__action = None
 
@@ -335,7 +333,6 @@ class Dungeon(cocos.tiles.RectMapLayer):
             column = []
             cells_column = []
             for y in range(self.dungeon_size[1]):
-                print(x, y)
                 if x == 1 and y == self.dungeon_size[1] - 2:
                     column.append(GOAL)
                 elif maze.cells[x][y] == 1:
@@ -443,5 +440,4 @@ class Dungeon(cocos.tiles.RectMapLayer):
 
         if self.accept_key:
             game_on_key_press(key, modifiers, self.hero)
-            self.accept_key = False
             self.hero.go()

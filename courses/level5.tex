@@ -1,0 +1,75 @@
+\chapter{Level 5}
+
+Après avoir passé 4 chapitres à voir les fondamentaux de la logique de programmation, nous allons passer un peu de temps à nous familiariser avec certains concepts qui sont plus proches du monde du jeu vidéo directement.
+
+\section{Les évènements}
+
+Peu importe le moteur de jeu ou la librairie que vous utiliserez, à un moment, vous serez confrontés à la notion d'\emph{évènement}. En effet, afin d'obtenir un jeu intéractif, il sera obligatoire de pouvoir réagir à différents stimulis extérieurs.
+
+Un exemple parmis les plus courants est la réponse à une action du joueur. Cela peut couvrir appuyer sur un bouton d'une manette, une touche du clavier, bouger la souris, ou cliquer.
+
+D'une façon générale, chacun de ces \emph{évènements} va être capté par le moteur de jeu\footnote{Nous utiliserons moteur de jeu dans la suite du texte pour désigner aussi bien les moteurs complets que les librairies du type de Cocos2D que nous avons utilisé tout au long du cours.} qui va ensuite le transmettre à certaines fonctions particulières du code.
+
+Il est difficile d'entrer vraiment dans les détails techniques de la façon dont cette transmission s'opère, mais nous allons voir comment transformer notre jeu afin de le rendre intéractif, là où auparavant il se ``jouait tout seul''.
+
+\subsection{Mon premier évènement}
+
+Une fois de plus, une fonction a été ajoutée dans \codeintext{run_game.py} pour prendre en charge la gestion du clavier.
+
+Cette fonction se présente comme suit :
+
+\begin{lstlisting}
+def on_key_press(key, modifiers, hero):
+    pass
+\end{lstlisting}
+
+La fonction propose 3 arguments : \codeintext{key_pressed}, \codeintext{modifiers} et \codeintext{hero}.
+
+\begin{description}
+\item[\codeintext{key_pressed}] est la touche du clavier qui a été pressée. Nous allons voir dans la section suivante comment l'utiliser.
+\item[\codeintext{modifiers}] va nous permettre si une touche \emph{spéciale} a été pressée en même temps que \codeintext{key_pressed}. Par exemple Shift, Ctrl ou Alt.
+\item[\codeintext{hero}] est la même variable \codeintext{hero} que vous avez utilisée lors des chapitres précédents. Rien de bien nouveau ici.
+\end{description}
+
+Pour vérifier que tout fonctionne bien, vous pouvez essayer d'imprimer à la console la touche utilisée. Pour rendre le résultat intelligible, vous pouvez utiliser une fonction de Cocos2D qui transforme le code de la touche en une valeur lisible :
+
+\begin{lstlisting}
+key.symbol_string(key_pressed)
+\end{lstlisting}
+
+Une fois que vous avez vu comment cela fonctionnait, il est temps de faire quelque chose de plus utile avec notre fonction qui gère les évènements claviers...
+
+\subsection{Un vrai jeu vidéo !}
+
+Comme vous avez pu l'expérimenter, nous avons pu voir que notre fonction \codeintext{on_key_pressed()} permet de traiter toutes sortes de touches, et pas seulement celles du clavier. Il en suit donc qu'il pourrait être intéressant d'utiliser ça pour assigner des touches aux différents mouvements du personnage.
+
+Mais pour arriver à ça, il vous faut une façon de savoir détecter, dans le code, quelle est la touche pressée. Heureusement, le module \codeintext{key} contient une liste de constante que vous pouvez utiliser.
+
+Pour ne pas vous rendre la tâche trop facile, voici un lien vers la page de documentation relative au clavier. Voyez si vous arrivez à en extraire l'information qu'il vous faut pour assigner les trois commandes de mouvement du personnages à des touches du clavier.
+
+\url{https://pyglet.readthedocs.org/en/pyglet-1.2-maintenance/programming_guide/keyboard.html}
+
+En guise de bonus, comment faire si on voulait permettre au jeu d'accepter 2 types de contrôle ? Comme par exemple les touches fléchées ainsi que les touches ZQSD ?
+
+\subsection{Les \emph{modifiers}}
+
+Cette section concerne une partie un petit peu plus avancée, en guise de bonus pour celles qui voudraient approfondir un peu plus.
+
+Nous avons jusqu'ici ignoré l'argument \codeintext{modifiers} de la fonction \codeintext{on_key_pressed()}.
+
+Pour l'utiliser, la page de documentation citée plus haut vous donne l'exemple suivant, où la condition est \codeintext{True} si la touche Shift est enfoncée:
+
+\beging{lstlisting}
+if modifiers & MOD_SHIFT:
+    pass
+\end{lstlisting}
+
+De nouveau, les détails techniques sont au-delà de notre cours d'initiation, mais en appliquant la syntaxe ci-dessus, sauriez implémenter le comportement suivant :
+
+\begin{center}
+\emph{``Si le joueur appuye sur CTRL + la flèche du bas, le personnage se retourne, avance d'un pas et se retourne à nouveau.''}
+\end{center}
+
+Bonne chance !
+
+
