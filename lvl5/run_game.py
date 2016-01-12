@@ -23,6 +23,7 @@ def game_update(hero, monsters):
     for monster in monsters:
         monster.right()
 
+
 def on_key_press(key, modifiers, hero):
     if key == kb.UP:
         hero.move()
