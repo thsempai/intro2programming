@@ -7,7 +7,7 @@ import pyglet
 
 from pyglet.gl import *
 
-from run_game import game_update
+from run_game import game_update, on_pickup_grabbed
 from run_game import on_key_press as game_on_key_press
 from maze import Maze
 from data import TILE_SIZE, SCREEN_SIZE, SCALE_FACTOR, ACTION_TIME
@@ -36,11 +36,22 @@ HERO_IMAGES_PATHS = {
     Direction.east: r'assets/hero_e.png',
     Direction.west: r'assets/hero_w.png'}
 
+class Pickup(cocos.sprite.Sprite):
+
+    def __init__(self, image_path, pickup_type=0):
+        super().__init__(
+            pyglet.image.load(image_path), (0, 0), anchor=(TILE_SIZE[0]/2, -TILE_SIZE[1] / 3))
+        self.dungeon = None
+        self.position = (0, 0)
+        self.dungeon_position = (0, 0)
+        self.pickup_type = pickup_type
+
+    def grab(self):
+        on_pickup_grabbed(self, self.dungeon.hero, self.dungeon.monsters)
 
 class Monster(cocos.sprite.Sprite):
 
     def __init__(self, image_path):
-        pyglet.image.load(image_path)
         super().__init__(
             pyglet.image.load(image_path), (0, 0), anchor=(TILE_SIZE[0]/2, -TILE_SIZE[1] / 3))
         self.dungeon = None
@@ -51,6 +62,16 @@ class Monster(cocos.sprite.Sprite):
         self.dungeon_position = (0, 0)
 
         self.new_action = None
+
+        self.hp = 10
+        self.damage = 0
+
+    def killed(self):
+        for index, monster in enumerate(self.dungeon.monsters):
+            if self == monster:
+                self.dungeon.monsters[index].kill()
+                del self.dungeon.monsters_position[index]
+                del self.dungeon.monsters[index]
 
     def __move(self, move):
         new_position = self.dungeon_position[0] + move[0], self.dungeon_position[1] + move[1]
@@ -71,7 +92,7 @@ class Monster(cocos.sprite.Sprite):
             position = \
                 self.dungeon_position[0] + direction[0], self.dungeon_position[1] + direction[0]
             if self.dungeon.is_tile_free_monster(position):
-                if position != self.dungeon.hero_position:
+                if position != self.dungeon.hero_position and position not in self.dungeon.pickups_position:
                     free.append(direction)
         return free
 
@@ -123,6 +144,9 @@ class Hero(cocos.sprite.Sprite):
         self.__current_action = None
 
         self.__images = []
+
+        self.hp = 10
+        self.damage = 0
 
         self.__moves = {
             Direction.north: cocos.actions.MoveBy((0, TILE_SIZE[1]), ACTION_TIME),
@@ -245,6 +269,10 @@ class Game(cocos.scene.Scene):
         self.character_layer.add(self.hero)
         self.dungeon.add_hero(self.hero)
 
+    def add_pickup(self, pickup, position):
+        self.character_layer.add(pickup)
+        self.dungeon.add_pickup(pickup, position)
+
     def add_monster(self, monster, position):
         self.character_layer.add(monster)
         self.dungeon.add_monster(monster, position)
@@ -290,6 +318,8 @@ class Dungeon(cocos.tiles.RectMapLayer):
         self.hero_position = None
         self.monsters = []
         self.monsters_position = []
+        self.pickups = []
+        self.pickups_position = []
 
         self.accept_key = True
 
@@ -315,6 +345,14 @@ class Dungeon(cocos.tiles.RectMapLayer):
         monster.position = position[0] * TILE_SIZE[0] + TILE_SIZE[0]/2, position[1] * TILE_SIZE[1]
         self.monsters .append(monster)
         monster.dungeon = self
+
+
+    def add_pickup(self, pickup, position):
+        self.pickups_position.append(position)
+        pickup.dungeon_position = position
+        pickup.position = position[0] * TILE_SIZE[0] + TILE_SIZE[0]/2, position[1] * TILE_SIZE[1]
+        self.pickups.append(pickup)
+        pickup.dungeon = self
 
     def add_hero(self, hero):
         self.hero = hero
@@ -382,6 +420,12 @@ class Dungeon(cocos.tiles.RectMapLayer):
             return True
         return False
 
+    def __pickup_in_position(self, position):
+
+        if position in self.pickups_position:
+            return True
+        return False
+
     def __tile_properties(self, position):
         x, y = position
         return self.tileset[self.tiles[x][y]].properties
@@ -400,10 +444,34 @@ class Dungeon(cocos.tiles.RectMapLayer):
         if self.__tile_properties(new_position)[OBSTACLE]:
             return False
         elif self.__monster_in_position(new_position):
+            for index, position in enumerate(self.monsters_position):
+                if position == new_position:
+                    monster = self.monsters[index]
+                    monster.hp -= self.hero.damage
+                    self.hero.hp -= monster.damage
             return False
+        elif self.__pickup_in_position(new_position):
+            for index, position in enumerate(self.pickups_position):
+                if position == new_position:
+                    self.pickups[index].grab()
+                    self.pickups[index].kill()
+                    del self.pickups_position[index]
+                    del self.pickups[index]
+                    self.hero_position = new_position
+                    return True 
         else:
             self.hero_position = new_position
             return True
+
+    def is_position_open(self, position):
+        if self.__tile_properties(position)[OBSTACLE]:
+            return False
+        elif self.__monster_in_position(position):
+            return False
+        elif self.__pickup_in_position(position):
+            return False
+        else:
+            return True        
 
     def is_tile_free(self, move):
         new_position = self.hero_position[0] + move[0], self.hero_position[1] + move[1]
