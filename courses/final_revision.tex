@@ -117,7 +117,7 @@ print(weird(5,6,8))
 \item
 \begin{lstlisting}
 def wtf(l):
-	l.append(len(l)
+	l.append(len(l))
 	return l
 	
 l = [1, 2]
@@ -138,7 +138,7 @@ def nthng(n):
 	n = n + a
 	r =  random.randint(1,2)
 	n = n -a
-	return b
+	return n
 	
 print(nthng(623))
 	
@@ -159,9 +159,10 @@ print(l)
 \begin{lstlisting}
 a = [1]
 b = 1
-while(len(a) < 6 or a[-1] == 3)
+while(len(a) < 6 or a[-1] == 3):
 	a.append(b)
 	b = b + 1
+print(b)
 
 \end{lstlisting}
 \response % [1, 1, 2, 3]
@@ -196,10 +197,9 @@ c = ""
 v = ['a', 'e', 'i', 'o', 'u', 'y']
 for l in kame:
 	if l not in v:
-	c = c + l
-	
-print(l)
+	   c = c + l
 
+print(c)
 \end{lstlisting}
 \response % [0, 1, 2]
 
@@ -224,7 +224,7 @@ while len(l) > 0:
 	else:
 		i.append(n)
 		
-print(str(p) + " " str(i))
+print(str(p) + " " + str(i))
 \end{lstlisting}
 \response % [8, 10] [1, 5, 3]
 
@@ -253,7 +253,7 @@ print(akachan)
 \pagebreak
 \item
 \begin{lstlisting}
-a = "Magic Dance"
+l = "Magic Dance"
 
 title = ""
 
@@ -285,7 +285,7 @@ def abracadadra(usagi):
 	return usagi + usagi
 
 rabbit = ["l", "4",  "p", "1", "n"]
-print(abracadabra(rabbit))
+print(abracadadra(rabbit))
 \end{lstlisting}
 \response %  ["l", "4",  "p", "1", "n", "l", "4",  "p", "1", "n"]
 

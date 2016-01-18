@@ -75,7 +75,7 @@ print(b)
 \begin{lstlisting}
 a = 2
 b = 5
-c = a + c
+c = a + b
 print(b + c)
 \end{lstlisting}
 \response % 12
@@ -133,7 +133,7 @@ print(a + str(b))
 \begin{lstlisting}
 a = "12"
 b = int(a) + 5
-print(a + b)
+print(int(a) + b)
 \end{lstlisting}
 \response % 17
 
@@ -217,7 +217,7 @@ print(b)
 \begin{lstlisting}
 item_nbr = 2
 item_name = "patate"
-if nbr > 1:
+if item_nbr > 1:
 	item_name = item_name + 's'
 print(item_name)
 
@@ -228,7 +228,7 @@ print(item_name)
 \begin{lstlisting}
 item_nbr = 1
 item_name = "patate"
-if nbr > 1:
+if item_nbr > 1:
 	item_name = item_name + 's'
 print(item_name)
 
