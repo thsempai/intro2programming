@@ -1,0 +1,120 @@
+\documentclass[12pt,a4paper]{article}
+
+\usepackage[francais]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{epigraph}
+\usepackage[T1]{fontenc}
+\usepackage{listings}
+\usepackage{graphicx}
+\usepackage{parskip}
+\usepackage{xcolor}
+
+
+%% config
+\definecolor{deepblue}{rgb}{0,0,0.5}
+
+\graphicspath{{images/}}
+\lstset{
+    language={Python},
+    basicstyle=\ttfamily\small, 
+    tabsize=4,
+    keywordstyle=\bold,
+    commentstyle=\color{gray},
+    backgroundcolor=\color{lightgray},
+    otherkeywords={self},
+	keywordstyle=\ttfamily\small\color{deepblue},
+    frame=single
+    showtabs=false,
+    showspaces=false,
+    showstringspaces=false,
+    inputencoding=utf8,
+    literate={à}{{\`a}}1 {è}{{\`e}}1,
+}
+
+%%macro
+
+\newcommand{\path}[1]{\texttt{#1}}
+
+\newcommand{\codeintext}[1]{\texttt{#1}}
+\newcommand{\response}{réponse : \hrulefill\\\\}
+
+\begin{document}
+
+\section*{Exercices bonus 1}
+
+Dans les scripts suivants, trouvez l'erreur qui s'est glissée dans le code et une fois celle-ci corrigée, déterminez ce qui sera affiché à l'écran.
+
+Vous pouvez vous aidez des scripts joints à ce fichier, pour trouver l'erreur et la corriger. \\
+
+\begin{enumerate}
+
+\item
+\begin{lstlisting}
+a = 1
+b = 2
+
+if a + b > 2
+	c = a + b
+else:
+	c = 2
+print(c)
+\end{lstlisting}
+\response % 3
+
+\item
+\begin{lstlisting}
+a = 3
+
+for x in range(a):
+	a = a + x1
+print(a + a)   
+\end{lstlisting}
+\response % 12
+
+\begin{lstlisting}
+name = 'Harry'
+index = 0
+
+while index < len(name):
+	if name[index] = 'a':
+		name = name[:index] + '4' + name[index+1:]
+	elif name[index] == 'i':
+		name = name[:index] + '1' + name[index+1:]
+
+	index = index + 1
+
+print(name)
+\end{lstlisting}
+\response % H4rry
+
+\begin{lstlisting}
+def p(n, m=1):
+	r = 1
+	
+	for i in range(m):
+	r = r * n
+
+	return r
+
+print(p(4,2) + p(3,3) + p(2)) 
+\end{lstlisting}
+\response % 45
+
+\begin{lstlisting}
+def mix(m1, m2):
+	m3 = ""
+	for index in range(len(m1)):
+		if index < len(m2):
+			m3 = m3 + m1[index] + m2(index)
+	return m3
+	
+a = "Al ean rcan"
+b = " asmiepohie"
+print(mix(a, b)) 	
+
+\end{lstlisting}
+\response % A la semaine prochaine
+
+\end{enumerate}
+
+\end{document}
