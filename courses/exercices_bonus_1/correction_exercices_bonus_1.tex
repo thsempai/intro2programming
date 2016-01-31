@@ -1,0 +1,123 @@
+\documentclass[12pt,a4paper]{article}
+
+\usepackage[francais]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{epigraph}
+\usepackage[T1]{fontenc}
+\usepackage{listings}
+\usepackage{graphicx}
+\usepackage{parskip}
+\usepackage{xcolor}
+
+
+%% config
+\definecolor{deepblue}{rgb}{0,0,0.5}
+
+\graphicspath{{images/}}
+\lstset{
+    language={Python},
+    basicstyle=\ttfamily\small, 
+    tabsize=4,
+    keywordstyle=\bold,
+    commentstyle=\color{gray},
+    backgroundcolor=\color{lightgray},
+    otherkeywords={self},
+	keywordstyle=\ttfamily\small\color{deepblue},
+    frame=single
+    showtabs=false,
+    showspaces=false,
+    showstringspaces=false,
+    inputencoding=utf8,
+    literate={à}{{\`a}}1 {è}{{\`e}}1,
+}
+
+%%macro
+
+\newcommand{\path}[1]{\texttt{#1}}
+
+\newcommand{\codeintext}[1]{\texttt{#1}}
+\newcommand{\response}[1]{Réponse: #1 \\\\}
+
+\begin{document}
+
+\section*{Correction Exercices bonus 1}
+
+\begin{enumerate}
+
+\item
+Il manquait ":" après le \codeintext{if a + b > 2}
+\begin{lstlisting}
+a = 1
+b = 2
+
+if a + b > 2:
+	c = a + b
+else:
+	c = 2
+print(c)
+\end{lstlisting}
+\response{3}
+
+x avait été remplacé par x1
+\item
+\begin{lstlisting}
+a = 3
+
+for x in range(a):
+	a = a + x
+print(a + a)   
+\end{lstlisting}
+\response{12}
+
+
+l'opérateur de comparaison "==" avait été remplacé par l'opérateur d'affectation "="
+\begin{lstlisting}
+name = 'Harry'
+index = 0
+
+while index < len(name):
+	if name[index] == 'a':
+		name = name[:index] + '4' + name[index+1:]
+	elif name[index] == 'i':
+		name = name[:index] + '1' + name[index+1:]
+
+	index = index + 1
+
+print(name)
+\end{lstlisting}
+\response{H4rry}
+
+
+La ligne avec \codeintext{r = r * n} n'était pas indentée correctement
+\begin{lstlisting}
+def p(n, m=1):
+	r = 1
+	
+	for i in range(m):
+		r = r * n
+
+	return r
+
+print(p(4,2) + p(3,3) + p(2)) 
+\end{lstlisting}
+\response{45}
+
+Dans \codeintext{m2(index)}, il fallait remplacer les parenthèses "()" par des crochets "[]", car c'est comme çà qu'on appelle d'index d'une chaine de caractère.
+\begin{lstlisting}
+def mix(m1, m2):
+	m3 = ""
+	for index in range(len(m1)):
+		if index < len(m2):
+			m3 = m3 + m1[index] + m2[index]
+	return m3
+	
+a = "Al ean rcan"
+b = " asmiepohie"
+print(mix(a, b)) 	
+
+\end{lstlisting}
+\response{A la semaine prochaine}
+
+\end{enumerate}
+
+\end{document}
