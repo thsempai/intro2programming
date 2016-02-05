@@ -1,0 +1,157 @@
+\documentclass[12pt,a4paper]{article}
+
+\usepackage[francais]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{epigraph}
+\usepackage[T1]{fontenc}
+\usepackage{listings}
+\usepackage{graphicx}
+\usepackage{parskip}
+\usepackage{xcolor}
+
+
+%% config
+\definecolor{deepblue}{rgb}{0,0,0.5}
+
+\graphicspath{{images/}}
+\lstset{
+    language={Python},
+    basicstyle=\ttfamily\small, 
+    tabsize=4,
+    keywordstyle=\bold,
+    commentstyle=\color{gray},
+    backgroundcolor=\color{lightgray},
+    otherkeywords={self},
+	keywordstyle=\ttfamily\small\color{deepblue},
+    frame=single
+    showtabs=false,
+    showspaces=false,
+    showstringspaces=false,
+    inputencoding=utf8,
+    literate={à}{{\`a}}1 {è}{{\`e}}1,
+}
+
+%%macro
+
+\newcommand{\path}[1]{\texttt{#1}}
+
+\newcommand{\codeintext}[1]{\texttt{#1}}
+\newcommand{\response}[1]{Réponse: #1 \\\\}
+
+\begin{document}
+
+\section*{Correction des exercices bonus 2}
+
+Voici une proposition de correctif pour les exercices bonus 2. Le code proposé ici n'est pas l'unique façon de faire, donc si vous n'avez pas exactement la même chose, ce n'est pas grave !
+
+\begin{enumerate}
+
+\item Le but ici était d'utiliser \codeintext{def} pour définir une fonction, et l'appeler ensuite.
+\begin{lstlisting}
+def print_integer():
+    print(5)
+
+
+print_integer()
+\end{lstlisting}
+Le résultat affiché devrait être 15 dans ce cas-ci.
+
+En effet, \codeintext{0 + 1 + 2 + 3 + 4 + 5 = 15}
+
+\item La subtilité dans l'exercice était qu'il fallait non seulement introduire une boucle, mais aussi une variable auxiliaire pour conserver le résultat, tout en faisant attention aux bornes de la boucle.
+
+\begin{lstlisting}
+def print_integer_sum():
+    result = 0
+    for i in range(5+1):
+        result = result + i
+    print(result)
+
+
+print_integer_sum()
+\end{lstlisting}
+
+Faites bien attention au \codeintext{range(5+1)}, le \codeintext{+1} veillant bien à ce que 5 soit compris dans le range utilisé ! Souvenez-vous, \codeintext{range(5)} aurait généré la liste \codeintext{[0, 1, 2, 3, 4]}.
+
+\newpage
+
+\item Ici, le changement était moins important, il fallait donc simplement rajouter l'argument à la fonction, l'utiliser dans le code, et le passer comme paramètre. 
+
+\begin{lstlisting}
+def print_integer_sum(number):
+    result = 0
+    for i in range(number+1):
+        result = result + i
+    print(result)
+
+
+print_integer_sum(5)
+\end{lstlisting}
+
+
+\item Vous vous souvenez de \codeintext{input} ? Et des conversions de données ?
+
+\begin{lstlisting}
+def print_integer_sum(number):
+    result = 0
+    for i in range(number+1):
+        result = result + i
+    print(result)
+
+
+n = input("Entrez un nombre : ")
+print_integer_sum(int(n))
+\end{lstlisting}
+
+Il fallait donc non seulement garder dans une variable la réponse de l'utilisateur, mais aussi transformer le string en entier via \codeintext{int()}. Notez que, si vous essayez d'entrer autre chose qu'un nombre entier, vous obtiendrez une \codeintext{ValueError}. Nous verrons dans le cours de Python plus avancé comment prendre en charge ce type de cas.
+
+\item La solution consistait ici à introduire un \codeintext{return} au lieu du \codeintext{print}, et de déplacer le \codeintext{print} dans la partie "code de test" du script.
+
+\begin{lstlisting}
+def integer_sum(number):
+    result = 0
+    for i in range(number+1):
+        result = result + i
+    return result
+
+
+n = input("Entrez un nombre : ")
+res = integer_sum(int(n))
+print(res)
+\end{lstlisting}
+
+\item \textbf{BONUS} : Voici 2 exemples de façons dont vous pouvez résoudre l'exercice. Il en existe de nombreuses autres, plus ou moins concises, et plus ou moins efficaces.
+
+\begin{lstlisting}
+def integer_sum_1(number):
+    result = 0
+    if number > 0:
+        for i in range(number+1):
+            result = result + i
+    else:
+        for i in range(number, 0):
+            result = result + i
+    return result
+
+
+def integer_sum_2(number):
+    result = 0
+    for i in range(min(number, 0), max(0, number+1)):
+        result = result + i
+    return result
+
+
+n = input("Entrez un nombre : ")
+
+res1 = integer_sum_1(int(n))
+print(res1)
+
+res2 = integer_sum_2(int(n))
+print(res2)
+\end{lstlisting}
+
+\end{enumerate}
+
+Voilà, en espérant que le reste de votre formation se passe bien en attendant de réattaquer un peu de Python :)
+
+\end{document}

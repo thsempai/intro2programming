@@ -1,0 +1,77 @@
+\documentclass[12pt,a4paper]{article}
+
+\usepackage[francais]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{epigraph}
+\usepackage[T1]{fontenc}
+\usepackage{listings}
+\usepackage{graphicx}
+\usepackage{parskip}
+\usepackage{xcolor}
+
+
+%% config
+\definecolor{deepblue}{rgb}{0,0,0.5}
+
+\graphicspath{{images/}}
+\lstset{
+    language={Python},
+    basicstyle=\ttfamily\small, 
+    tabsize=4,
+    keywordstyle=\bold,
+    commentstyle=\color{gray},
+    backgroundcolor=\color{lightgray},
+    otherkeywords={self},
+	keywordstyle=\ttfamily\small\color{deepblue},
+    frame=single
+    showtabs=false,
+    showspaces=false,
+    showstringspaces=false,
+    inputencoding=utf8,
+    literate={à}{{\`a}}1 {è}{{\`e}}1,
+}
+
+%%macro
+
+\newcommand{\path}[1]{\texttt{#1}}
+
+\newcommand{\codeintext}[1]{\texttt{#1}}
+\newcommand{\response}{Réponse : \hrulefill\\\\}
+
+\begin{document}
+
+\section*{Exercices bonus 2}
+
+Dans cette série d'exercices, vous allez partir d'un script Python vide, et tenter d'écrire puis améliorer la fonction demandée. Les exercices ne sont pas folichons, mais c'est pour la bonne cause ! Les exercices 
+
+Si vous écrivez votre code sur un ordinateur, et que vous voulez le vérifier, vous pouvez organiser votre script comme ceci :\\
+
+\begin{lstlisting}
+|
+| ma fonction
+|
+
+| code de test (print, appels de fonctions, ...)
+\end{lstlisting}
+
+Vous pouvez aussi écrire votre code sur papier, ce qui peut être un bon exercice. Le plus important étant la logique du code, plus que son exactitude au niveau de la syntaxe (pour la syntaxe, Python se chargera de vous rappeler à l'ordre).
+
+\begin{enumerate}
+
+\item Définissez une fonction qui imprime à la console un nombre entier positif, de votre choix.
+
+\item Modifiez la fonction pour la faire imprimer, au lieu du nombre choisi, la somme des entiers positifs de zero à votre nombre. Par exemple, si le nombre est 3, la fonction devrait imprimer 6 car : \codeintext{0 + 1 + 2 + 3 = 6}.
+
+\item Plutôt que de fixer le nombre arbitrairement, utilisez un argument passé à la fonction. Si on appelle \codeintext{my\_function(3)}, le code devrait afficher 6, tandis que si on fait \codeintext{my\_function(2)}, le code devrait afficher 3 (\codeintext{0 + 1 + 2 = 3}). (Attention de bien prendre le nombre lui-même dans la somme !)
+
+\item Modifiez quelque peu votre script pour que ce soit l'utilisateur qui décide du nombre à passer en argument à la fonction.
+
+\item Enfin, modifiez votre fonction pour que, à la place d'imprimer le résultat de la somme dans la fonction, la fonction \emph{renvoie} le résultat, et imprimez-le dans la partie "code de test" de votre script.
+
+\item \textbf{BONUS} : Modifiez votre fonction pour qu'elle fonctionne aussi pour les nombre entiers négatifs. Il y a pas mal de façons de faire ça, soit via un \codeintext{if}, soit avec des \codeintext{min()} et \codeintext{max()} par exemple. 
+
+\end{enumerate}
+
+Bonne chance !
+
+\end{document}
